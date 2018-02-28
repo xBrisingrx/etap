@@ -120,9 +120,9 @@ class Atributos extends CI_Controller {
 			$row[] = $a->presenta_resumen_mensual;
 			$row[] = (!$a->activo) ? $a->update_at : ' ';
 			 if ($a->activo) {
-				$row[] = 'btn activos';
+				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_profile('."'".$a->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="delete_attribute('."'".$a->id."'".')" ><i class="fa fa-trash-o"></i></button>';
 			} else {
-				$row[] = 'btn no activos';
+				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_profile('."'".$a->id."'".')" disabled ><i class="fa fa-edit"></i></button> <button class="btn u-btn-aqua g-mr-10 g-mb-15" title="Reactivar" onclick="reactivate_attribute('."'".$a->id."'".')" ><i class="fa fa-retweet"></i></button>';
 			};
 
 

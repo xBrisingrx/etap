@@ -184,7 +184,7 @@
 <!-- Fin modal form -->
 
 <!-- Modal para eliminar atributo -->
-<div class="modal fade" id="modal_delete_profile" tabindex="-1" role="dialog">
+<div class="modal fade" id="modal_delete_attribute" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -194,14 +194,14 @@
         </button>
       </div>
       <div class="modal-body">
-      	<input type="hidden" id="id_profile_delete" name="id_profile_delete" value="">
-       	<p id="name_profile_delete"><strong>Nombre: </strong> </p>
+      	<input type="hidden" id="id_attribute_delete" name="id_attribute_delete" value="">
+       	<p id="name_attribute_delete"><strong>Nombre: </strong> </p>
        	<br>
-       	<p id="description_profile_delete"><strong>Detalle: </strong></p>
+       	<p id="description_attribute_delete"><strong>Detalle: </strong></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-red" onclick="destroy_profile()">Eliminar</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn u-btn-red" onclick="destroy_attribute()">Eliminar</button>
+        <button type="button" class="btn u-btn-indigo" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -319,48 +319,48 @@
 		if (form_atributos.valid()) { save(); }
 	});
 
-// // Llamo al modal de advertencia para eliminar el perfil
-// 	function delete_profile(id)
-// 	{
-// 		$.ajax({
-// 			url: "<?php echo base_url('Perfiles/edit/');?>" + id,
-// 			type: "GET",
-// 			dataType: "JSON",
-// 			success: function(resp)
-// 			{
-// 				$('#modal_delete_profile #id_profile_delete').val(resp.id);
-// 				$('#modal_delete_profile #name_profile_delete').append(resp.nombre);
-// 				$('#modal_delete_profile #description_profile_delete').append(resp.descripcion);
-// 				$('#modal_delete_profile').modal('show');
-// 			},
-// 			error: function()
-// 			{
-// 				alert('Error al obtener los datos');
-// 			}
-// 		});
-// 	}
-// 	// Elimino el perfil
-// 	function destroy_profile()
-// 	{
-// 		var id_profile = $('#id_profile_delete').val();
-// 		$.ajax({
-// 			url: "<?php echo base_url('Perfiles/destroy/');?>" + id_profile,
-// 			type: "POST",
-// 			success: function(msg)
-// 			{
-// 				if (msg === 'ok') {
-// 					table_perfiles.ajax.reload(null,false);
-// 					$('#modal_delete_profile').modal('hide');
-// 				} else {
-// 					alert('Error al intentar eliminar el perfil');
-// 				}
-// 			},
-// 			error: function(jqXHR, textStatus, errorThrown)
-// 			{
-// 				alert('Fallo el eliminar');
-// 			}
-// 		});
-// 	}
+// Llamo al modal de advertencia para eliminar el perfil
+	function delete_attribute(id)
+	{
+		$.ajax({
+			url: "<?php echo base_url('Atributos/edit/');?>" + id,
+			type: "GET",
+			dataType: "JSON",
+			success: function(resp)
+			{
+				$('#modal_delete_attribute #id_attribute_delete').val(resp.id);
+				$('#modal_delete_attribute #name_attribute_delete').append(resp.nombre);
+				$('#modal_delete_attribute #description_attribute_delete').append(resp.descripcion);
+				$('#modal_delete_attribute').modal('show');
+			},
+			error: function()
+			{
+				alert('Error al obtener los datos');
+			}
+		});
+	}
+	// Elimino el perfil
+	function destroy_attribute()
+	{
+		var id_attribute = $('#id_attribute_delete').val();
+		$.ajax({
+			url: "<?php echo base_url('Atributos/destroy/');?>" + id_attribute,
+			type: "POST",
+			success: function(msg)
+			{
+				if (msg === 'ok') {
+					table_atributos.ajax.reload(null,false);
+					$('#modal_delete_attribute').modal('hide');
+				} else {
+					alert('Error al intentar eliminar el atributo');
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown)
+			{
+				alert('Fallo el eliminar atributo');
+			}
+		});
+	}
 
 
   $(document).on('ready', function () {
