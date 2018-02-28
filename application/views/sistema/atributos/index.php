@@ -364,7 +364,7 @@
 
 
   $(document).on('ready', function () {
-		$('#tabla_atributos').DataTable( {
+	table_atributos =	$('#tabla_atributos').DataTable( {
 													lengthChange: false,   
 													ajax : '<?php echo base_url('Atributos/ajax_get_atributos/').$tipo_atributo;?>'
 													// columns: [
