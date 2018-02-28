@@ -253,36 +253,36 @@
 		$('#modal_form_atributo').modal('show');
 	}	
 
-// 	function edit_profile(id)
-// 	{
-// 		save_method = 'update';
-// 		$('#form_perfiles')[0].reset();
+	function edit_profile(id)
+	{
+		save_method = 'update';
+		$('#form_atributos')[0].reset();
 
-// 		$.ajax({
-// 			url: "<?php echo base_url('Perfiles/edit/');?>" + id,
-// 			type: "GET",
-// 			dataType: "JSON",
-// 			success: function(data)
-// 				{
-// 					$('[name=id]').val(data.id);
-// 					$('[name=nombre]').val(data.nombre);
-// 					$('[name=descripcion]').val(data.descripcion);
-// 					$('[name=fecha_inicio_vigencia]').val(data.fecha_inicio_vigencia);
+		$.ajax({
+			url: "<?php echo base_url('Atributos/edit/');?>" + id,
+			type: "GET",
+			dataType: "JSON",
+			success: function(data)
+				{
+					$('[name=id]').val(data.id);
+					$('[name=nombre]').val(data.nombre);
+					$('[name=descripcion]').val(data.descripcion);
+					$('[name=fecha_inicio_vigencia]').val(data.fecha_inicio_vigencia);
 
-// 					$('.form-control').removeClass('error');
-// 					$('.error').empty();					
+					$('.form-control').removeClass('error');
+					$('.error').empty();					
 
-// 					$('#modal_form_perfil .modal-title').text('Modificar perfil');
-// 					$('#modal_form_perfil #btnSave').text('Actualizar perfil');
-// 					$('#modal_form_perfil').modal('show');
-// 				},
-// 			error: function(jqXHR, textStatus, errorThrown)
-// 				{
-// 					alert('Error obteniendo datos');
-// 				}
-// 		});
+					$('#modal_form_atributo .modal-title').text('Modificar perfil');
+					$('#modal_form_atributo #btnSave').text('Actualizar perfil');
+					$('#modal_form_atributo').modal('show');
+				},
+			error: function(jqXHR, textStatus, errorThrown)
+				{
+					alert('Error obteniendo datos');
+				}
+		});
 
-// 	}
+	}
 
 	function save()
 	{
@@ -366,7 +366,7 @@
   $(document).on('ready', function () {
 	table_atributos =	$('#tabla_atributos').DataTable( {
 													lengthChange: false,   
-													ajax : '<?php echo base_url('Atributos/ajax_get_atributos/').$tipo_atributo;?>'
+													ajax : '<?php echo base_url('Atributos/ajax_get/').$tipo_atributo;?>'
 													// columns: [
 													// 	{ "data": "nombre"  },
 													// 	{ "data": "descripcion" },
