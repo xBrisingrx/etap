@@ -83,7 +83,7 @@
 				  <div class="form-group g-mb-20">
 				  	<label class="form-check-inline u-check g-pl-25">
 					  	Dato obligatorio
-					    <input id="dato_obligatorio" name="dato_obligatorio" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
+					    <input id="dato_obligatorio" name="dato_obligatorio" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="0">
 					    <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
 					      <i class="fa" data-check-icon=""></i>
 					    </div>
@@ -108,7 +108,7 @@
 				  <div id="select_tiene_vencimiento" class="form-group g-mb-20" style="display: none">
 				    <label class="mr-sm-3 mb-3 mb-lg-0" for="tipo_vencimiento">Tipo de vencimiento(*)</label>
 				    <select class="custom-select mb-3" id="tipo_vencimiento">
-				      <option selected="">Seleccione tipo vencimiento</option>
+				      <option value="0">Seleccione tipo vencimiento</option>
 				      <option value="1">Semanal</option>
 				      <option value="2">Quincenal</option>
 				      <option value="3">Mensual</option>
@@ -122,7 +122,7 @@
 				  <!-- Numb Input periodo vencimiento -->
 				  <div id="input_periodo_vencimiento" class="form-group g-mb-20" style="display: none">
 				    <label class="g-mb-10" for="periodo_vencimiento">Período vencimiento (días) (*)</label>
-				    <input id="periodo_vencimiento" name="periodo_vencimiento" importeclass="form-control form-control-md rounded-0" type="number" required>
+				    <input id="periodo_vencimiento" name="periodo_vencimiento" class="form-control form-control-md rounded-0" type="number" required>
 				    <small class="form-control-feedback"></small>
 				  </div>
 				  <!-- End Numb Input periodo vencimiento -->
@@ -131,7 +131,7 @@
 				  <div class="form-group g-mb-20">
 					  <label class="form-check-inline u-check g-pl-25">
 					  	Permite anexar PDF
-					    <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
+					    <input id="permite_pdf" name="permite_pdf" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
 					    <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
 					      <i class="fa" data-check-icon=""></i>
 					    </div>
@@ -213,6 +213,8 @@
 	var save_method;
 	var table_atributos;
 
+
+
 	$('#tiene_vencimiento').on('click', function(){
 		if ($(this).is(':checked')) {
 			$('#select_tiene_vencimiento').show();
@@ -284,6 +286,22 @@
 
 	}
 
+	function extraerDatos(miForm)
+	{
+		let componentes = $(miForm).find(':input[type=checkbox],input,textarea,option');
+		let rta = [];
+		$.each(componentes, function(index,componente){
+			if ($(componente).prop("type")  == "checkbox") {
+				rta.push($(componente).is(':checked'));
+			}  else if (componente.id == "tipo_vencimiento") {
+				rta.push('selected');
+			} else {
+				rta.push($(componente).val());
+			}
+		});
+		return rta;
+	}
+
 	function save()
 	{
 		var url;
@@ -292,26 +310,29 @@
 
      url = "<?php echo base_url();?>Atributos/" + save_method;
     // ajax adding data to database
-    $.ajax({
-    	url: url,
-    	type: "POST",
-    	data: $('#form_atributos').serializeArray(),
-    	success: function(msg)
-    	{
-    		if (msg === 'ok') {
-    			table_atributos.ajax.reload(null,false);
-    			$('#modal_form_atributo').modal('hide');
-    		} else {
-    			alert('error al guardar datos '+ msg);
-    		}
-    		$('#btnSave').attr('disabled', false);
-    	},
-    	error: function(jqXHR, textStatus, errorThrown){
-    		alert('Error al guardar datos metodo: ' + save_method);
-    		$('#btnSave').attr('disabled', false);
-    	}
+		 console.log(extraerDatos($('#form_atributos')));  
 
-    });
+
+    // $.ajax({
+    // 	url: url,
+    // 	type: "POST",
+    // 	data: $('#form_atributos').serialize(),
+    // 	success: function(msg)
+    // 	{
+    // 		if (msg === 'ok') {
+    // 			table_atributos.ajax.reload(null,false);
+    // 			$('#modal_form_atributo').modal('hide');
+    // 		} else {
+    // 			alert('error al guardar datos '+ msg);
+    // 		}
+    // 		$('#btnSave').attr('disabled', false);
+    // 	},
+    // 	error: function(jqXHR, textStatus, errorThrown){
+    // 		alert('Error al guardar datos metodo: ' + save_method);
+    // 		$('#btnSave').attr('disabled', false);
+    // 	}
+
+    // });
 	}
 
 	$('#form_atributos').submit(function(e){
