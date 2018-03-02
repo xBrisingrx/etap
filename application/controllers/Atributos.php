@@ -96,7 +96,7 @@ class Atributos extends CI_Controller {
 
 
 // Obtengo los datos de mi tabla y los devuelvo en formato json para insertar en datatables
-	public function ajax_get($tipo)
+	public function ajax_list_attributes($tipo)
 	{
 		$atributos = $this->Atributo_model->get('tipo',$tipo);
 		$data = array();
@@ -131,6 +131,12 @@ class Atributos extends CI_Controller {
 
 	  $output = array("data" => $data);
 		echo json_encode($output);
+	}
+
+	public function ajax_get_attributes($tipo)
+	{
+		$attributes = $this->Atributo_model->get('tipo',$tipo);
+		echo( json_encode($attributes) );
 	}
 
 }

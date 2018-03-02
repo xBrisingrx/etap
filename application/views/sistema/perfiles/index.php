@@ -34,7 +34,7 @@
 	<br><br>
 
 	<div class="row">
-		<button>Asignar atributo</button>
+		<button onclick="assign_attribute()">Asignar atributo</button>
 	</div>
 
 	<!-- Hover Rows -->
@@ -120,13 +120,69 @@
 				    </div>
 				  </div>
 				  <!-- End Select Single Date -->
-				<button id="btnSave" type="submit" class="btn btn-primary" ></button>
+				<button id="btnSave" type="submit" class="btn btn-primary"></button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+<div class="modal fade" id="modal_add_attribute" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<form id="form_asignar_atributo" class="g-brd-around g-brd-gray-light-v4 g-pa-30 g-mb-30">
+				  <!-- Select perfil -->
+				  <div class="form-group g-mb-20">
+				    <label class="mr-sm-3 mb-3 mb-lg-0" for="profile_id">Perfil (*)</label>
+				    <select class="custom-select mb-3" id="profile_id">
+				      <!-- Populate with ajax -->
+				    </select>
+				  </div>
+				  <!-- End select perfil -->
+
+				  <!-- Select tipo vencimiento -->
+				  <div class="form-group g-mb-20">
+				    <label class="mr-sm-3 mb-3 mb-lg-0" for="ttribute_id">Atributo (*)</label>
+				    <select class="custom-select mb-3" id="attribute_id">
+				      
+				    </select>
+				  </div>
+				  <!-- End select tipo vencimiento -->
+
+				  <!-- Select Single Date -->
+				  <div class="form-group g-mb-30">
+				    <label class="g-mb-10">Fecha inicio vigencia(*)</label>
+				    <div class="input-group g-brd-primary--focus">
+				      <input id="fecha_inicio_vigencia_atributo_perfil" name="fecha_inicio_vigencia_atributo_perfil" class="form-control form-control-md  rounded-0" type="date" required>
+				      <div class="input-group-addon d-flex align-items-center g-bg-white g-color-gray-dark-v5 rounded-0">
+				        <i class="icon-calendar"></i>
+				      </div>
+				    </div>
+				  </div>
+				  <!-- End Select Single Date -->
+      	</form>
+      </div>
+      <div class="modal-footer">
+        <button id="btnSaveAssign" type="button" class="btn btn-primary" onclick="">Asignar atributo</button>
+        <button type="button" class="btn btn-red" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 <div class="modal fade" id="modal_delete_profile" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -145,7 +201,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-red" onclick="destroy_profile()">Eliminar</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -290,10 +346,75 @@
 	}
 
 
+// Funciones para operaciones de asignacion de atributos al perfil
+
+	// Obtengo los perfiles para imprimirlos en el select de asignar atributo al perfil
+	function print_profiles()
+	{	
+		$.ajax({
+			url: '<?php echo base_url("Perfiles/ajax_get_profiles/").$tipo_perfil?>',
+			type: 'GET',
+			success: function(resp){
+				var profiles = $.parseJSON(resp)
+				$('#profile_id').find('option').remove().end().append('<option value="" disabled selected >Seleccione perfil</option>')
+				$(profiles).each(function(i, element){
+					$('#profile_id').append("<option value="+element.id+">"+element.nombre+"</option>");
+				});
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				$('#profile_id').find('option').remove().end().append('<option value="" disabled selected >Seleccione perfil</option>');
+				$('#profile_id').append("<option value=''>No se pudieron obtener los perfiles</option>");
+			}
+		});
+	}
+
+	// Obtengo los atributos para el modal asignar perfil atributo
+	function print_attributes()
+	{
+		$.ajax({
+			url: '<?php echo base_url("Atributos/ajax_get_attributes/").$tipo_perfil; ?>',
+			type: 'GET',
+			success: function(resp){
+				var attributes = $.parseJSON(resp)
+				$('#attribute_id').find('option').remove().end().append('<option value="" disabled selected >Seleccione atributo</option>')
+				$(attributes).each(function(i, element){
+					$('#attribute_id').append("<option value="+element.id+">"+element.nombre+"</option>");
+				});
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				$('#profile_id').find('option').remove().end().append('<option value="" disabled selected >Seleccione atributo</option>');
+				$('#profile_id').append("<option value=''>No se pudieron obtener los atributos</option>");
+			}
+		});
+	}
+
+	function modal_assign_attribute()
+	{
+		save_method = 'assign_attribute';
+		$('#form_asignar_atributo')[0].reset();
+		$('#modal_add_attribute .modal-title').text('Asignación de atributo al perfil de  <?php echo $nombre_perfil; ?>');
+		$('#modal_add_attribute #btnSave').text('Asignar atributo');
+		$('.form-control').removeClass('error');
+		$('.error').empty();
+		print_profiles();
+		print_attributes();
+		$('#modal_add_attribute').modal('show');
+	}
+
+	function assign_attribute()
+	{
+		var profile_id = $('#profile_id').val()
+		var attribute_id = $('#attribute_id').val()
+		
+
+	}
+
+
+
   $(document).on('ready', function () {
 		table_perfiles = $('#tabla_perfiles').DataTable( {
 													lengthChange: false,   
-													ajax : "<?php echo base_url('Perfiles/ajax_get_perfiles/').$tipo_perfil;?>",
+													ajax : "<?php echo base_url('Perfiles/ajax_list_perfiles/').$tipo_perfil;?>",
 													columns: [
 														{ "data": "nombre"  },
 														{ "data": "descripcion" },

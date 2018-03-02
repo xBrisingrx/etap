@@ -89,7 +89,7 @@ class Perfiles extends CI_Controller {
 
 
 // Obtengo los datos de mi tabla y los devuelvo en formato json para insertar en datatables
-	public function ajax_get_perfiles($tipo)
+	public function ajax_list_perfiles($tipo)
 	{
 		$perfiles = $this->Perfil_model->get('tipo',$tipo);
 		$data = array();
@@ -115,6 +115,12 @@ class Perfiles extends CI_Controller {
 
 	  $output = array("data" => $data);
 		echo json_encode($output);
+	}
+
+	public function ajax_get_profiles($tipo)
+	{
+		$profiles = $this->Perfil_model->get('tipo',$tipo);
+		echo ( json_encode($profiles) );
 	}
 
 }

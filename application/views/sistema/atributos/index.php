@@ -40,7 +40,7 @@
 	      </tbody>
 	    </table>
 	  </div>
-	</div>
+	</div> 
 	<!-- End Hover Rows -->
 </section>
 
@@ -90,6 +90,20 @@
 					  </label>
 				  </div>
 				  <!-- End Checkbox dato obligatorio -->
+
+				  <!-- Select categoria -->
+				  <div class="form-group g-mb-20">
+				    <label class="mr-sm-3 mb-3 mb-lg-0" for="categoria">Categoria(*)</label>
+				    <select class="custom-select mb-3" id="categoria">
+				      <option value="0">Seleccione categoria</option>
+				      <option value="1">General</option>
+				      <option value="2">Liquidación de haberes</option>
+				      <option value="3">Otros</option>
+				      <option value="4">Seguros</option>
+				      <option value="5">Sindicatos</option>
+				    </select>
+				  </div>
+				  <!-- End select categoria -->
 
 				  <!-- Checkbox dato tiene vencimiento  -->
 				  <div class="form-group g-mb-20">
@@ -387,7 +401,7 @@
   $(document).on('ready', function () {
 	table_atributos =	$('#tabla_atributos').DataTable( {
 													lengthChange: false,   
-													ajax : '<?php echo base_url('Atributos/ajax_get/').$tipo_atributo;?>'
+													ajax : '<?php echo base_url('Atributos/ajax_list_attributes/').$tipo_atributo;?>'
 													// columns: [
 													// 	{ "data": "nombre"  },
 													// 	{ "data": "descripcion" },
