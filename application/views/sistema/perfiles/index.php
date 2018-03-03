@@ -423,11 +423,11 @@
 
 	function modal_edit_attribute(id)
 	{
-		save_method = 'edit_assign_attribute';
+		save_method = 'update_assign_attribute';
 		$('#form_asignar_atributo')[0].reset();
 
 		$.ajax({
-			url: "<?php echo base_url('Perfiles/edit_profile_attribute/');?>" + id,
+			url: "<?php echo base_url('Perfiles/edit_assign_attribute/');?>" + id,
 			type: "GET",
 			dataType: "JSON",
 			success: function(data)
@@ -439,8 +439,8 @@
 
 					print_profiles(data.profile_id);
 					print_attributes(data.attribute_id);
-					$('#profile_id').find('option:selected').text('textito')
-
+					$('#id_profile_attribute').val(data.id)
+					$('#fecha_inicio_vigencia_atributo_perfil').val(data.fecha_inicio_vigencia)
 					$('.form-control').removeClass('error');
 					$('.error').empty();					
 
@@ -468,24 +468,17 @@
 		var attribute_id = $('#attribute_id').val()
 		var fecha = $('#fecha_inicio_vigencia_atributo_perfil').val()
 		
-		if (save_method === 'assign_attribute') {
-			url = '<?php echo base_url("Perfiles/assign_attribute");?>'
-		} else if (save_method === 'edit_assign_attribute') {
-			url = '<?php echo base_url("Perfiles/edit_assign_attribute");?>'+id
-		} else {
-			alert('Error al editar atributo del perfil')
-		}
+		url = '<?php echo base_url("Perfiles/");?>'+save_method
 
 		$.ajax({
-			url: '<?php echo base_url("Perfiles/assign_attribute");?>',
+			url: url,
 			type: 'POST',
 			cache: false,
-			data: { profile_id: profile_id, attribute_id: attribute_id, fecha_inicio_vigencia: fecha, tipo: tipo_id } ,
+			data: { profile_id: profile_id, attribute_id: attribute_id, fecha_inicio_vigencia: fecha, tipo: tipo_id, id: id } ,
 			success: function(resp){
 				if (resp === 'ok') {
 					table_perfiles_atributos.ajax.reload(null,false);
 					$('#modal_add_attribute').modal('hide');
-
 				}
 				
 			},

@@ -38,10 +38,10 @@ class Perfiles_Atributos_model extends CI_Model {
   	return $this->db->insert('perfiles_atributos', $perfil_atributo);
   }
 
-  public function update_entry($id, $perfil)
+  public function update_entry($id, $perfil_atributo)
   {
     $this->db->where('id', $id);
-    return $this->db->update('perfiles_atributos', $perfil);
+    return $this->db->update('perfiles_atributos', $perfil_atributo);
   }
 
   public function destroy($id)

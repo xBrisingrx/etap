@@ -113,6 +113,22 @@ class Perfiles extends CI_Controller {
 		echo json_encode($profile_attribute);
 	}
 
+	public function update_assign_attribute()
+	{
+		$id = $this->input->post('id');
+		$profile_attribute = array(
+			'perfil_id' => $this->input->post('profile_id'),
+			'atributo_id' => $this->input->post('attribute_id'),
+			'fecha_inicio_vigencia' => $this->input->post('fecha_inicio_vigencia'),
+			'update_at' => date('Y-m-d H:i:s')
+		);
+		if ($this->Perfiles_Atributos_model->update_entry($id, $profile_attribute)) {
+			echo 'ok';
+		} else {
+			echo 'Errores al salvar cambios';
+		}
+	}
+
 
 
 // Obtengo los datos de mi tabla y los devuelvo en formato json para insertar en datatables
