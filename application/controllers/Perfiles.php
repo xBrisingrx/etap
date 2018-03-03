@@ -169,8 +169,8 @@ class Perfiles extends CI_Controller {
 			$row = array();
 			$row[] = $p->nombre_perfil;
 			$row[] = $p->nombre_atributo;
-			$row[] = $p->fecha_inicio_vigencia;
-			$row[] = ($p->activo) ? ' ' : $p->update_at;
+			$row[] = date('d-m-Y', strtotime($p->fecha_inicio_vigencia));
+			$row[] = ($p->activo) ? ' ' : date('d-m-Y', strtotime($p->update_at));
 			$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="modal_edit_attribute('."'".$p->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="delete_attribute('."'".$p->id."'".')" ><i class="fa fa-trash-o"></i></button>';
 			$data[] = $row;
 		}
