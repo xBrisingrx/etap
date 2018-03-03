@@ -46,12 +46,12 @@ class Perfiles_Atributos_model extends CI_Model {
 
   public function destroy($id)
   {
-      $perfil = $this->db->get_where('perfiles_atributos', array('id' => $id))->row();
-      $perfil->activo = false;
-      $perfil->update_at = date('Y-m-d H:i:s');
+      $attribute_profile = $this->db->get_where('perfiles_atributos', array('id' => $id))->row();
+      $attribute_profile->activo = false;
+      $attribute_profile->update_at = date('Y-m-d H:i:s');
 
       $this->db->where('id', $id);
-      return $this->db->update('perfiles_atributos', $perfil);
+      return $this->db->update('perfiles_atributos', $attribute_profile);
   }
 
 }
