@@ -45,20 +45,20 @@
                   <!-- End Submenu personas -->
                 </li>
                 <li class="nav-item hs-has-sub-menu g-mx-20--lg g-mb-5 g-mb-0--lg">
-                  <a href="#!" class="nav-link" id="nav-link-1" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu-1">Vehiculos</a>
+                  <a href="<?php echo base_url('Vehiculos');?>" class="nav-link" id="nav-link-1" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu-1">Vehiculos</a>
                   <!-- Submenu Vehiculos -->
                   <ul class="hs-sub-menu list-unstyled g-mt-20--lg g-mt-10--lg--scrolling" id="nav-submenu-1" aria-labelledby="nav-link-1">
                     <li>
-                      <a href="#!">Nuevo vehiculo</a>
+                      <a href="<?php echo base_url('Vehiculos/new');?>!">Nuevo vehiculo</a>
                     </li>
                     <li>
-                      <a href="#!">Asignacion de perfiles</a>
+                      <a href="<?php echo base_url('');?>">Asignacion de perfiles</a>
                     </li>
                     <li>
-                      <a href="#!">Admin de perfiles</a>
+                      <a href="<?php echo base_url('Perfiles/index/2');?>">Admin de perfiles</a>
                     </li>
                     <li>
-                      <a href="#!">Admin de atributos</a>
+                      <a href="<?php echo base_url('Atributos/index/2');?>">Admin de atributos</a>
                     </li>
                     <li>
                       <a href="#!">Dependencia de atributos</a>
