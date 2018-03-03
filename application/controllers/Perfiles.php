@@ -87,6 +87,33 @@ class Perfiles extends CI_Controller {
 		}
 	}
 
+	public function assign_attribute()
+	{
+
+		$profile_attribute = array(
+			'tipo' => $this->input->post('tipo'),
+			'perfil_id' => $this->input->post('profile_id'),
+			'atributo_id' => $this->input->post('attribute_id'),
+			'fecha_inicio_vigencia' => $this->input->post('fecha_inicio_vigencia'),
+			'create_at' => date('Y-m-d H:i:s'),
+			'update_at' => date('Y-m-d H:i:s'),
+			'activo' => TRUE
+		);
+
+		if ($this->Perfiles_Atributos_model->insert_entry($profile_attribute)) {
+			echo 'ok';
+		} else {
+			echo 'error';
+		}
+	}
+
+	public function edit_profile_attribute($id)
+	{
+		$profile_attribute = $this->Perfiles_Atributos_model->get('id', $id);
+		echo json_encode($profile_attribute);
+	}
+
+
 
 // Obtengo los datos de mi tabla y los devuelvo en formato json para insertar en datatables
 	public function ajax_list_perfiles($tipo)
@@ -114,6 +141,24 @@ class Perfiles extends CI_Controller {
 		}
 
 	  $output = array("data" => $data);
+		echo json_encode($output);
+	}
+
+	public function ajax_list_perfiles_atributos($tipo)
+	{
+		$perfiles_atributos = $this->Perfiles_Atributos_model->get('tipo',$tipo);
+		$data = array();
+
+		foreach ($perfiles_atributos as $p) {
+			$row = array();
+			$row[] = $p->nombre_perfil;
+			$row[] = $p->nombre_atributo;
+			$row[] = $p->fecha_inicio_vigencia;
+			$row[] = ($p->activo) ? ' ' : $p->update_at;
+			$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="modal_edit_attribute('."'".$p->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="delete_attribute('."'".$p->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+			$data[] = $row;
+		}
+		$output = array("data" => $data);
 		echo json_encode($output);
 	}
 

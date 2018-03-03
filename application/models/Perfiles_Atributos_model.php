@@ -13,12 +13,14 @@ class Perfiles_Atributos_model extends CI_Model {
   {
   	if($attr != null and $valor != null)
   	{
-  		$query = $this->db->get_where('perfiles_atributos', array($attr => $valor));
-      if ($query->num_rows() == 1 ) {
-        return $query->row();
-      } else {
-        return $query->result();
-      }
+  		$sql = $this->db->query("SELECT perfiles_atributos.id, perfiles.nombre as nombre_perfil, atributos.nombre as nombre_atributo, 
+                                perfiles_atributos.update_at, perfiles_atributos.fecha_inicio_vigencia, perfiles_atributos.activo,
+                                perfiles_atributos.tipo 
+                                FROM perfiles_atributos 
+                                  join perfiles on perfiles_atributos.perfil_id=perfiles.id 
+                                  join atributos on perfiles_atributos.atributo_id=atributos.id
+                                    where (perfiles_atributos.".$attr." = '".$valor."')");
+      return $sql->result();
   	} else 
     	{
     		return $this->db->get('perfiles_atributos')->result();
@@ -26,9 +28,9 @@ class Perfiles_Atributos_model extends CI_Model {
   }
 
 
-  public function insert_entry($perfil)
+  public function insert_entry($perfil_atributo)
   {
-  	return $this->db->insert('perfiles_atributos', $perfil);
+  	return $this->db->insert('perfiles_atributos', $perfil_atributo);
   }
 
   public function update_entry($id, $perfil)

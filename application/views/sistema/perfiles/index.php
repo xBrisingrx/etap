@@ -33,8 +33,8 @@
 	<!-- End Hover Rows -->
 	<br><br>
 
-	<div class="row">
-		<button onclick="assign_attribute()">Asignar atributo</button>
+	<div class="row g-mb-20">
+		<button class="btn btn-success " onclick="modal_assign_attribute()">Asignar atributo</button>
 	</div>
 
 	<!-- Hover Rows -->
@@ -54,17 +54,8 @@
 	          <th>Acciones</th>
 	        </tr>
 	      </thead>
-
 	      <tbody>
-	      	<?php foreach ($perfiles_atributos as $p): ?>
-	      		<tr>
-	      			<td><?php echo $p->nombre;?></td>
-	      			<td><?php echo $p->descripcion;?></td>
-	      			<td><?php echo $p->fecha_inicio_vigencia;?></td>
-	      			<td>fecha baja</td>
-	      			<td>Acciones</td>
-	      		</tr>
-	      	<?php endforeach ?>
+	      	<!-- Populate with ajax -->
 	      </tbody>
 	    </table>
 	  </div>
@@ -142,10 +133,14 @@
       </div>
       <div class="modal-body">
       	<form id="form_asignar_atributo" class="g-brd-around g-brd-gray-light-v4 g-pa-30 g-mb-30">
+      		<!-- ID profile_attribute -->
+      		<input type="hidden" id="id_profile_attribute" name="id_profile_attribute" value="">
+      		<!-- Tipo ID -->
+      		<input type="hidden" id="tipo_perfil_atributo" name="tipo_perfil_atributo" value="<?php echo $tipo_perfil;?>">
 				  <!-- Select perfil -->
 				  <div class="form-group g-mb-20">
 				    <label class="mr-sm-3 mb-3 mb-lg-0" for="profile_id">Perfil (*)</label>
-				    <select class="custom-select mb-3" id="profile_id">
+				    <select class="custom-select mb-3" id="profile_id" required>
 				      <!-- Populate with ajax -->
 				    </select>
 				  </div>
@@ -153,9 +148,9 @@
 
 				  <!-- Select tipo vencimiento -->
 				  <div class="form-group g-mb-20">
-				    <label class="mr-sm-3 mb-3 mb-lg-0" for="ttribute_id">Atributo (*)</label>
-				    <select class="custom-select mb-3" id="attribute_id">
-				      
+				    <label class="mr-sm-3 mb-3 mb-lg-0" for="attribute_id">Atributo (*)</label>
+				    <select class="custom-select mb-3" id="attribute_id" required>
+				      <!-- Populate with ajax -->
 				    </select>
 				  </div>
 				  <!-- End select tipo vencimiento -->
@@ -171,11 +166,9 @@
 				    </div>
 				  </div>
 				  <!-- End Select Single Date -->
+					<button id="btnSaveAssign" type="submit" class="btn btn-primary">Asignar atributo</button>
+        	<button type="button" class="btn btn-red" data-dismiss="modal">Cerrar</button>
       	</form>
-      </div>
-      <div class="modal-footer">
-        <button id="btnSaveAssign" type="button" class="btn btn-primary" onclick="">Asignar atributo</button>
-        <button type="button" class="btn btn-red" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -211,6 +204,7 @@
 <script type="text/javascript">
 	var save_method;
 	var table_perfiles;
+	var table_perfiles_atributos;
 
 	$.validator.addMethod("alfanumOespacio", function(value, element) {
 	        return /^[ a-záéíóúüñ]*$/i.test(value);
@@ -223,6 +217,7 @@
 																'descripcion': { minlength: 10 }
 															}
 														});
+	var form_assign_attribute = $('#form_asignar_atributo').validate({})
 
 	function create_profile()
 	{
@@ -299,7 +294,6 @@
 	$('#form_perfiles').submit(function(e){
 		e.preventDefault();	
 		if (form_perfiles.valid()) { save(); }
-		
 	});
 
 // Llamo al modal de advertencia para eliminar el perfil
@@ -356,7 +350,7 @@
 			type: 'GET',
 			success: function(resp){
 				var profiles = $.parseJSON(resp)
-				$('#profile_id').find('option').remove().end().append('<option value="" disabled selected >Seleccione perfil</option>')
+				$('#profile_id').find('option').remove().end().append('<option value="0" disabled selected >Seleccione perfil</option>')
 				$(profiles).each(function(i, element){
 					$('#profile_id').append("<option value="+element.id+">"+element.nombre+"</option>");
 				});
@@ -394,21 +388,81 @@
 		$('#form_asignar_atributo')[0].reset();
 		$('#modal_add_attribute .modal-title').text('Asignación de atributo al perfil de  <?php echo $nombre_perfil; ?>');
 		$('#modal_add_attribute #btnSave').text('Asignar atributo');
-		$('.form-control').removeClass('error');
+		$('#form_asignar_atributo .form-control').removeClass('error');
 		$('.error').empty();
 		print_profiles();
 		print_attributes();
 		$('#modal_add_attribute').modal('show');
 	}
 
-	function assign_attribute()
+	function modal_edit_attribute(id)
 	{
-		var profile_id = $('#profile_id').val()
-		var attribute_id = $('#attribute_id').val()
-		
+		save_method = 'edit_attribute';
+		$('#form_asignar_atributo')[0].reset();
+
+		$.ajax({
+			url: "<?php echo base_url('Perfiles/edit_profile_attribute/');?>" + id,
+			type: "GET",
+			dataType: "JSON",
+			success: function(data)
+				{
+					// $('[name=id_profile_attribute]').val(data.id);
+					// $('[name=profile_id]').val(data.profile_id);
+					// $('[name=attribute_id]').val(data.attribute_id);
+					// $('[name=fecha_inicio_vigencia_atributo_perfil]').val(data.fecha_inicio_vigencia);
+
+					print_profiles();
+					print_attributes();
+					$('#profile_id').find('option:selected').text('textito')
+
+					$('.form-control').removeClass('error');
+					$('.error').empty();					
+
+					// $('#modal_add_attribute .modal-title').text('Modificar perfil');
+					// $('#modal_add_attribute #btnSave').text('Actualizar perfil');
+					$('#modal_add_attribute').modal('show');
+				},
+			error: function(jqXHR, textStatus, errorThrown)
+				{
+					alert('Error obteniendo datos');
+				}
+		});
 
 	}
 
+
+
+	function save_asign_attribute()
+	{
+		var tipo_id = $('#tipo_perfil_atributo').val()
+		var profile_id = $('#profile_id').val()
+		var attribute_id = $('#attribute_id').val()
+		var fecha = $('#fecha_inicio_vigencia_atributo_perfil').val()
+		alert(tipo_id)
+
+		$.ajax({
+			url: '<?php echo base_url("Perfiles/assign_attribute");?>',
+			type: 'POST',
+			cache: false,
+			data: { profile_id: profile_id, attribute_id: attribute_id, fecha_inicio_vigencia: fecha, tipo: tipo_id } ,
+			success: function(resp){
+				if (resp === 'ok') {
+					table_perfiles_atributos.ajax.reload(null,false);
+					$('#modal_add_attribute').modal('hide');
+
+				}
+				
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				alert('error')
+			}
+		});
+	}
+
+	$('#form_asignar_atributo').submit(function(e){
+		e.preventDefault();	
+		if (form_assign_attribute.valid()) { save_asign_attribute(); }
+	});
 
 
   $(document).on('ready', function () {
@@ -423,5 +477,9 @@
 														{ "data": "acciones" }
 													]
 												});
+		table_perfiles_atributos = $('#tabla_perfiles_atributos').DataTable({
+																	lengthChange: false,
+																	ajax: '<?php echo base_url("Perfiles/ajax_list_perfiles_atributos/").$tipo_perfil;?>'
+		});
   });
 </script>
