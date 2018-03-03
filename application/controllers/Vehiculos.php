@@ -5,12 +5,22 @@ class Vehiculos extends CI_Controller {
 
 	public function __construct()
 	{
-	        parent::__construct();
+	  parent::__construct();
+		$this->load->model('Vehiculo_model');
+	  $this->load->model('Marca_vehiculo_model');
+	  $this->load->model('Modelo_vehiculo_model');
+	  $this->load->model('Tipo_vehiculo_model');
+	  date_default_timezone_set('America/Argentina/Buenos_Aires'); 
 	}
 
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$title['title'] = 'Vehiculos';
+		$data['vehiculos'] = $this->Vehiculo_model->get();
+		$this->load->view('includes/header',$title);
+		$this->load->view('includes/nav');
+		$this->load->view('sistema/vehiculos/index',$data);
+		$this->load->view('includes/footer');
 	}
 
 	public function new()
