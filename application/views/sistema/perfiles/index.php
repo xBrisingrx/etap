@@ -343,17 +343,30 @@
 // Funciones para operaciones de asignacion de atributos al perfil
 
 	// Obtengo los perfiles para imprimirlos en el select de asignar atributo al perfil
-	function print_profiles()
+	function print_profiles(profile_id)
 	{	
 		$.ajax({
 			url: '<?php echo base_url("Perfiles/ajax_get_profiles/").$tipo_perfil?>',
 			type: 'GET',
 			success: function(resp){
 				var profiles = $.parseJSON(resp)
-				$('#profile_id').find('option').remove().end().append('<option value="0" disabled selected >Seleccione perfil</option>')
-				$(profiles).each(function(i, element){
-					$('#profile_id').append("<option value="+element.id+">"+element.nombre+"</option>");
-				});
+				// Si me traigo el ID para editar 
+				if (typeof(profile_id) !== "undefined") {
+					$('#profile_id').find('option').remove().end().append('<option >Seleccione perfil</option>')
+					$(profiles).each(function(i, element){
+						// Comparo para dejar seleccionado el id de atributo
+						if (profile_id == element.id) {
+							$('#profile_id').append("<option value="+element.id+" selected>"+element.nombre+"</option>");
+						} else {
+							$('#profile_id').append("<option value="+element.id+">"+element.nombre+"</option>");
+						}
+					});
+				} else {
+					$('#profile_id').find('option').remove().end().append('<option disabled selected >Seleccione perfil</option>')
+					$(profiles).each(function(i, element){
+						$('#profile_id').append("<option value="+element.id+">"+element.nombre+"</option>");
+					});
+				}
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				$('#profile_id').find('option').remove().end().append('<option value="" disabled selected >Seleccione perfil</option>');
@@ -363,17 +376,30 @@
 	}
 
 	// Obtengo los atributos para el modal asignar perfil atributo
-	function print_attributes()
+	function print_attributes(attribute_id)
 	{
 		$.ajax({
 			url: '<?php echo base_url("Atributos/ajax_get_attributes/").$tipo_perfil; ?>',
 			type: 'GET',
 			success: function(resp){
 				var attributes = $.parseJSON(resp)
-				$('#attribute_id').find('option').remove().end().append('<option value="" disabled selected >Seleccione atributo</option>')
-				$(attributes).each(function(i, element){
-					$('#attribute_id').append("<option value="+element.id+">"+element.nombre+"</option>");
-				});
+				// Si me traigo el ID para editar 
+				if (typeof(attribute_id) !== "undefined") {
+					$('#attribute_id').find('option').remove().end().append('<option disabled >Seleccione atributo</option>')
+					$(attributes).each(function(i, element){
+						// Comparo para dejar seleccionado el id de atributo
+						if (attribute_id == element.id) {
+							$('#attribute_id').append("<option value="+element.id+" selected>"+element.nombre+"</option>");
+						} else {
+							$('#attribute_id').append("<option value="+element.id+">"+element.nombre+"</option>");
+						}
+					});
+				} else {
+					$('#attribute_id').find('option').remove().end().append('<option value="" disabled selected >Seleccione atributo</option>')
+					$(attributes).each(function(i, element){
+						$('#attribute_id').append("<option value="+element.id+">"+element.nombre+"</option>");
+					});
+				}
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				$('#profile_id').find('option').remove().end().append('<option value="" disabled selected >Seleccione atributo</option>');
@@ -397,7 +423,7 @@
 
 	function modal_edit_attribute(id)
 	{
-		save_method = 'edit_attribute';
+		save_method = 'edit_assign_attribute';
 		$('#form_asignar_atributo')[0].reset();
 
 		$.ajax({
@@ -411,8 +437,8 @@
 					// $('[name=attribute_id]').val(data.attribute_id);
 					// $('[name=fecha_inicio_vigencia_atributo_perfil]').val(data.fecha_inicio_vigencia);
 
-					print_profiles();
-					print_attributes();
+					print_profiles(data.profile_id);
+					print_attributes(data.attribute_id);
 					$('#profile_id').find('option:selected').text('textito')
 
 					$('.form-control').removeClass('error');
@@ -420,6 +446,7 @@
 
 					// $('#modal_add_attribute .modal-title').text('Modificar perfil');
 					// $('#modal_add_attribute #btnSave').text('Actualizar perfil');
+					
 					$('#modal_add_attribute').modal('show');
 				},
 			error: function(jqXHR, textStatus, errorThrown)
@@ -434,11 +461,20 @@
 
 	function save_asign_attribute()
 	{
+		var url;
+		var id = $('#id_profile_attribute').val()
 		var tipo_id = $('#tipo_perfil_atributo').val()
 		var profile_id = $('#profile_id').val()
 		var attribute_id = $('#attribute_id').val()
 		var fecha = $('#fecha_inicio_vigencia_atributo_perfil').val()
-		alert(tipo_id)
+		
+		if (save_method === 'assign_attribute') {
+			url = '<?php echo base_url("Perfiles/assign_attribute");?>'
+		} else if (save_method === 'edit_assign_attribute') {
+			url = '<?php echo base_url("Perfiles/edit_assign_attribute");?>'+id
+		} else {
+			alert('Error al editar atributo del perfil')
+		}
 
 		$.ajax({
 			url: '<?php echo base_url("Perfiles/assign_attribute");?>',
@@ -477,6 +513,7 @@
 														{ "data": "acciones" }
 													]
 												});
+
 		table_perfiles_atributos = $('#tabla_perfiles_atributos').DataTable({
 																	lengthChange: false,
 																	ajax: '<?php echo base_url("Perfiles/ajax_list_perfiles_atributos/").$tipo_perfil;?>'

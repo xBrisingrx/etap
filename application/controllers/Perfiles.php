@@ -107,7 +107,7 @@ class Perfiles extends CI_Controller {
 		}
 	}
 
-	public function edit_profile_attribute($id)
+	public function edit_assign_attribute($id)
 	{
 		$profile_attribute = $this->Perfiles_Atributos_model->get('id', $id);
 		echo json_encode($profile_attribute);
