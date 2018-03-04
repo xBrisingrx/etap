@@ -25,7 +25,11 @@ class Vehiculos extends CI_Controller {
 
 	public function new()
 	{
-
+		$title['title'] = 'Alta de vehiculo';
+		$this->load->view('includes/header',$title);
+		$this->load->view('includes/nav');
+		$this->load->view('sistema/vehiculos/new');
+		$this->load->view('includes/footer');	
 	}
 
 	public function create()
