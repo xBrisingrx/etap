@@ -66,7 +66,7 @@
 
     <div class="form-group mb-0 offset-md-2">
       <label class="u-file-attach-v2 g-color-gray-dark-v5 mb-0">
-        <input id="pdf_dni" name="pdf_dni" type="file">
+        <input id="pdf_dni" name="pdf_dni" type="file" accept=".pdf">
         <i class="icon-cloud-upload g-font-size-16 g-pos-rel g-top-2 g-mr-5"></i>
         <span class="js-value">Anexar PDF del DNI</span>
       </label>
@@ -83,7 +83,7 @@
 
 	  <!-- PDF CUIL -->
       <label class="u-file-attach-v2 g-color-gray-dark-v5 mb-0">
-        <input id="pdf_cuil" name="pdf_cuil" type="file">
+        <input id="pdf_cuil" name="pdf_cuil" type="file" accept=".pdf">
         <i class="icon-cloud-upload g-font-size-16 g-pos-rel g-top-2 g-mr-5"></i>
         <span class="js-value">Anexar PDF del CUIL</span>
       </label>
@@ -99,7 +99,7 @@
 
 	  <!-- PDF fecha nacimiento -->
       <label class="u-file-attach-v2 g-color-gray-dark-v5 mb-0">
-        <input id="pdf_fecha_nacimiento" name="pdf_fecha_nacimiento" type="file">
+        <input id="pdf_fecha_nacimiento" name="pdf_fecha_nacimiento" type="file" accept=".pdf">
         <i class="icon-cloud-upload g-font-size-16 g-pos-rel g-top-2 g-mr-5"></i>
         <span class="js-value">Anexar PDF del fecha nacimiento</span>
       </label>
@@ -141,7 +141,7 @@
 	</div>
 	<!-- End Empresa input -->
 
-	<button type="submit" class="btn btn-primary g-mr-10 g-mb-15">Grabar persona</button>
+	<button type="submit" id="btnSubmit" class="btn btn-primary g-mr-10 g-mb-15">Grabar persona</button>
 	<a href="<?php echo base_url('Personas');?>" class="btn btn-danger g-mr-10 g-mb-15">Cancelar</a>
 	</form>
 </section>
@@ -149,57 +149,144 @@
 
 <script type="text/javascript">
  $(document).ready(function(){
-    $('#form_persona').validate({
+ 	let contador = 0
+    // $('#form_persona').validate({
+    //   rules: {
+    //     'nombre': { lettersonly: true, minlength: 3 },
+    //     'apellido': { lettersonly: true,  minlength: 3},
+    //     'nacionalidad': { lettersonly: true, minlength: 3 },
+    //     'fecha_vencimiento_dni': {
+    //       // Si esta check el vencimiento dni es requerido ingresar la fecha
+    //       required: function (element){
+    //         return $('#check_vencimiento_dni').is(':checked');
+    //       }
+    //     },
+    //     'dni': {
+    //           number: true, 
+    //           minlength: 7, 
+    //           maxlength: 9,
+    //           // remote: {
+    //           // 	url: 'dni_unico',
+    //           // 	type: 'post',
+    //           // 	data: $('#dni').val()
+    //           // }
+    //         },
+    //     'cuil': {number: true, minlength: 10, maxlength: 12},
+    //     'telefono': {number: true, minlength: 5},
+    //     'pdf_dni': {
+    //     	extension: "pdf"
+    //     },
+    //     'pdf_cuil': {
+    //     	extension: "pdf"
+    //     },
+    //     'pdf_fecha_nacimiento': {
+    //     	extension: "pdf"
+    //     }
+    //   },
+    //   messages: {
+    //     'dni': {
+    //       remote: 'El DNI pertenece a otra persona'
+    //     },
+    //     'cuil': {
+    //       remote: 'El CUIL pertenece a otra persona'
+    //     },
+    //     'pdf_dni': {
+    //     	extension: 'Este documento no es un PDF'
+    //     },
+    //     'pdf_cuil': {
+    //     	extension: 'Este documento no es un PDF'
+    //     },
+    //     'pdf_fecha_nacimiento': {
+    //     	extension: 'Este documento no es un PDF'
+    //     }
+    //   }
+    // });
 
-      rules: {
-        'nombre': { lettersonly: true, minlength: 3 },
-        'apellido': { lettersonly: true,  minlength: 3},
-        'nacionalidad': { lettersonly: true, minlength: 3 },
-        'fecha_vencimiento_dni': {
-          // Si esta check el vencimiento dni es requerido ingresar la fecha
-          required: function (element){
-            return $('#check_vencimiento_dni').is(':checked');
-          }
-        },
-        'dni': {
-              number: true, 
-              minlength: 7, 
-              maxlength: 9,
-              // remote: {
-              // 	url: 'dni_unico',
-              // 	type: 'post',
-              // 	data: $('#dni').val()
-              // }
-            },
-        'cuil': {number: true, minlength: 10, maxlength: 12},
-        'telefono': {number: true, minlength: 5},
-        'pdf_dni': {
-        	extension: "pdf"
-        },
-        'pdf_cuil': {
-        	extension: "pdf"
-        },
-        'pdf_fecha_nacimiento': {
-        	extension: "pdf"
-        }
-      },
-      messages: {
-        'dni': {
-          remote: 'El DNI pertenece a otra persona'
-        },
-        'cuil': {
-          remote: 'El CUIL pertenece a otra persona'
-        },
-        'pdf_dni': {
-        	extension: 'Este documento no es un PDF'
-        },
-        'pdf_cuil': {
-        	extension: 'Este documento no es un PDF'
-        },
-        'pdf_fecha_nacimiento': {
-        	extension: 'Este documento no es un PDF'
-        }
-      }
-    });
+    // $('#btnSubmit').unbind().click(function(event){
+    // 	let groupFiles = $('input[type="file"]')
+    // 	$.each(groupFiles, function(index, input){
+    // 		// 
+    // 	})
+    // })
+
+    $('#form_persona').on('submit', function(event){
+    	event.preventDefault()
+    	let groupFiles = $('input[type="file"]')
+    	$.each(groupFiles, function(index, inputFile){
+    		upload_pdf(inputFile)
+    	})
+    })
+
+
+
+    function upload_pdf(element)
+    {
+    	var file_data = $(element).prop('files')[0]
+    	var form_data = new FormData()
+    	form_data.append('file', file_data)
+    	$.ajax({
+    		url: '<?php echo base_url("Personas/upload_pdf");?>',
+    		type: 'POST',
+    		dataType: 'pdf',
+    		cache: false,
+    		contentType: false,
+    		processData: false,
+    		data: { param: form_data },
+    		success: function(resp){
+    			console.log('subieron los archivos')
+    		},
+    		error: function(jqXHR, textStatus, errorThrown){
+    			alert('jqXHR: '+ jqXHR + '  textStatus: '+ textStatus + '  errorThrown: '+errorThrown)
+    		}
+    	})
+    	.done(function(){
+    		chequear()
+    		console.log('ajax upload done')
+    	})
+    }
+
+    function chequear()
+    {
+    	if (contador >= 2) {
+    		// Ultimo archivo subido
+    		ajaxDatos()
+    	} else {
+    		contador++
+    	}
+    }
+
+    function ajaxDatos()
+    {
+    	$.ajax({
+    		url: '',
+    		type: 'POST',
+    		data: agruparDatos()
+    	})
+    	.done(function(){
+    		console.log('done ajaxDatos')
+    	})
+    }
+
+    // function agruparDatos()
+    // {
+    // 	person = {
+    // 		'n_legajo': $('#legajo').val(),
+    // 		'apellido': $('#apellido').val(),
+    // 		'nombre': $('#nombre').val(),
+    // 		'dni': $('#dni').val(),
+    // 		'dni_tiene_vencimiento': $('#dni_tiene_vencimiento').val(),
+    // 		'fecha_vencimiento_dni': $('#fecha_vencimiento_dni').val(),
+    // 		'cuil': $('#cuil').val(),
+    // 		'fecha_nacimiento': $('#fecha_nacimiento').val(),
+    // 		'nacionalidad': $('#nacionalidad').val(),
+    // 		'domicilio': $('#domicilio').val(),
+    // 		'telefono': $('#telefono').val(),
+    // 		'empresa_id': $('#empresa_id').val()
+    // 		'dni_pdf_path': $('#apellido').val()+'_dni_'+$('#dni').val()+'.pdf',
+    // 		'cuil_pdf_path': $('#apellido').val()+'_cuil_'+$('#cuil').val()+'.pdf',
+    // 		'fecha_nacimiento_pdf_path': $('#apellido').val()+'_fecha_nacimiento.pdf'
+    // 	}
+    // 	return person;
+    // }
 });
 </script>

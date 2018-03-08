@@ -49,7 +49,7 @@
                   <!-- Submenu Vehiculos -->
                   <ul class="hs-sub-menu list-unstyled g-mt-20--lg g-mt-10--lg--scrolling" id="nav-submenu-1" aria-labelledby="nav-link-1">
                     <li>
-                      <a href="<?php echo base_url('Vehiculos/new');?>!">Nuevo vehiculo</a>
+                      <a href="<?php echo base_url('Vehiculos/new');?>">Nuevo vehiculo</a>
                     </li>
                     <li>
                       <a href="<?php echo base_url('');?>">Asignacion de perfiles</a>

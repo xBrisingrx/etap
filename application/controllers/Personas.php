@@ -233,25 +233,13 @@ class Personas extends CI_Controller {
 	}
 
 
-	function upload_pdf($nombre, $input, $error_upload)
+	function upload_pdf()
 	{
-		$error_upload = 'ingrese al upload';
-    $config['upload_path']   = '/srv/http/etap/assets/uploads/';
-    $config['allowed_types'] = 'pdf';
-    $config['max_size']      = 10240;
-    $config['file_name'] 	 = $nombre;
-
-    $this->upload->initialize($config);
-
-    if ( ! $this->upload->do_upload($input) )
-    {
-      $error_upload = array('error' => $this->upload->display_errors());;
-      return false;
-    }
-    else
-    {
-      return true;
-    }
+		if (0 < $_FILES['file']['error']) {
+			echo 'Error:' . $_FILES['file']['error']. '<br>';
+		} else {
+			move_uploaded_file($_FILES['file']['tmp_name'], 'assets/upload/'.$_FILES['file']['tmp_name'].'.pdf');
+		}
 	}
 
 	public function dni_unico() 

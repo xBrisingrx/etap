@@ -7,11 +7,11 @@ class Vehiculo_model extends CI_Model {
           parent::__construct();
   }
 
-  public function get($attr = null, $valor = null)
+  public function get($attr = null, $value = null)
   {
-  	if($attr != null and $valor != null)
+  	if($attr != null and $value != null)
   	{
-  		$query = $this->db->get_where('personas', array($attr => $valor));
+  		$query = $this->db->get_where('personas', array($attr => $value));
       if ($query->num_rows() == 1 ) {
         return $query->row();
       } else {
@@ -24,15 +24,15 @@ class Vehiculo_model extends CI_Model {
   }
 
 
-  public function insert_entry($persona)
+  public function insert_entry($table, $value)
   {
-  	return $this->db->insert('personas', $persona);
+  	return $this->db->insert($table, $value);
   }
 
-  public function update_entry($id, $persona)
+  public function update_entry($table, $id, $value)
   {
     $this->db->where('id', $id);
-    return $this->db->update('personas', $persona);
+    return $this->db->update($table, $value);
   }
 
   public function destroy($id)
@@ -44,5 +44,27 @@ class Vehiculo_model extends CI_Model {
       $this->db->where('id', $id);
       return $this->db->update('personas', $persona);
   }
+
+
+  /* ===================== Operaciones de attr ==========================
+  =======================================================================
+  ======================================================================= */
+
+  public function get_attr($table, $attr = null, $value = null)
+  {
+    if ($attr != null and $value != null) {
+      return $this->db->get_where($table, array($attr => $value))->result();
+    } else {
+        if ($table == 'modelos_vehiculos') {
+          $this->db->select('modelos_vehiculos.id AS id, modelos_vehiculos.nombre as nombre,marcas_vehiculos.nombre as nombre_marca')
+                      ->from($table)
+                        ->join('marcas_vehiculos', 'marcas_vehiculos.id = modelos_vehiculos.marca_vehiculo_id');
+          return $this->db->get()->result();
+        } else {
+        return $this->db->get($table)->result();
+      }
+    }
+  }
+
 
 }

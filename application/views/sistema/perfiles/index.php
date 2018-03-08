@@ -25,7 +25,7 @@
 
 	      <tbody>
 	      	<!-- Completo con ajax -->
-	        </tr>
+
 	      </tbody>
 	    </table>
 	  </div>
@@ -34,7 +34,7 @@
 	<br><br>
 
 	<div class="row g-mb-20">
-		<button class="btn btn-success " onclick="modal_assign_attribute()">Asignar atributo</button>
+		<button class="btn btn-success" onclick="modal_assign_attribute()">Asignar atributo</button>
 	</div>
 
 	<!-- Hover Rows -->

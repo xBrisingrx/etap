@@ -52,6 +52,57 @@ class Vehiculos extends CI_Controller {
 		
 	}
 
+	/* ===================== Operaciones de attr ==========================
+	=======================================================================
+	======================================================================= */
+	public function get_attr($table, $attr = null,$value = null)
+	{
+		if ( $value != null ) {
+			$data = $this->Vehiculo_model->get_attr($table.'s_vehiculos', $attr, $value);
+		} else {
+			$data = $this->Vehiculo_model->get_attr($table.'s_vehiculos');
+		}
+		echo json_encode($data);
+	}
+
+	public function list_attr($table)
+	{
+		$query = $this->Vehiculo_model->get_attr($table.'s_vehiculos');
+		$data = array();
+
+		foreach ($query as $q) {
+			$row = array();
+			$row[] = $q->nombre;
+			if ($table == 'modelo') {
+				$row[] = $q->nombre_marca;
+			}
+			$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_attr_vehiculo('."'".$q->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="delete_attr_vehiculo('."'".$q->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+			$data[] = $row;
+		}
+		$output = array("data" => $data);
+		echo json_encode($output);
+	}
+
+	public function create_attr_vehiculo($table)
+	{
+		if ($table == 'modelo') {
+			$data = array(
+							'nombre' => $this->input->post('nombre'),
+							'marca_vehiculo_id' => $this->input->post('marca_id')
+			);
+		} else {
+			$data = array(
+							'nombre' => $this->input->post('nombre')
+			);
+		}
+		if ($this->Vehiculo_model->insert_entry($table.'s_vehiculos', $data)) {
+			echo 'ok';
+		} else {
+			echo 'Errores al registrar attr vehiculo';
+		}
+	}
+
+
 
 	/* ===================== MARCAS VEHICULOS =============================
 	=======================================================================
