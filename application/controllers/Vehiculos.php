@@ -47,14 +47,38 @@ class Vehiculos extends CI_Controller {
 		
 	}
 
-	public function destroy()
+	public function destroy($table, $id)
 	{
-		
+		if ($this->Vehiculo_model->detroy($table, $id)) {
+			echo 'ok';
+		} else {
+			echo 'Ocurrio un error al eliminar el registro';
+		}
+	}
+
+	public function destroy_marca($id)
+	{
+		if ($this->Vehiculo_model->destroy_marca($id)) {
+			echo 'ok';
+		} else {
+			echo 'Error';
+		}
 	}
 
 	/* ===================== Operaciones de attr ==========================
 	=======================================================================
 	======================================================================= */
+	public function _validate_attr($table)
+	{ if ($table != 'modelos_vehiculos') {
+		$this->form_validation->set_rules('nombre', 'Nombre', 'is_unique['.$table.'.nombre]|trim');
+	} else {
+		$this->form_validation->set_rules('nombre', 'Nombre', 'is_unique['.$table.'.nombre]|trim|callback_modelo_vehiculo_unico');
+	}
+		
+
+		$this->form_validation->set_message('is_unique', 'Este nombre ya esta en uso');
+	}
+
 	public function get_attr($table, $attr = null,$value = null)
 	{
 		if ( $value != null ) {
@@ -72,11 +96,14 @@ class Vehiculos extends CI_Controller {
 
 		foreach ($query as $q) {
 			$row = array();
+
 			$row[] = $q->nombre;
+			
 			if ($table == 'modelo') {
 				$row[] = $q->nombre_marca;
 			}
-			$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_attr_vehiculo('."'".$q->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="delete_attr_vehiculo('."'".$q->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+			$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_attr_vehiculo('."'".$q->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="modal_delete_attr_vehiculo
+			('."'".$table."','".$q->id."'".')" ><i class="fa fa-trash-o"></i></button>';
 			$data[] = $row;
 		}
 		$output = array("data" => $data);
@@ -85,109 +112,47 @@ class Vehiculos extends CI_Controller {
 
 	public function create_attr_vehiculo($table)
 	{
-		if ($table == 'modelo') {
-			$data = array(
-							'nombre' => $this->input->post('nombre'),
-							'marca_vehiculo_id' => $this->input->post('marca_id')
-			);
+		$this->_validate_attr($table.'s_vehiculos');
+
+		 if ($this->form_validation->run() == FALSE) { // Validamos. Si algo salio mal..
+            echo validation_errors(); //devolvemos los errores
+        } else {
+					if ($table == 'modelo') {
+						$data = array(
+										'nombre' => $this->input->post('nombre'),
+										'marca_vehiculo_id' => $this->input->post('marca_id'),
+										'create_at' => date('Y-m-d H:i:s'),
+										'update_at' => date('Y-m-d H:i:s'),
+										'user_create_id' => $this->session->userdata('id'),
+										'activo' => true
+						);
+					} else {
+						$data = array(
+										'nombre' => $this->input->post('nombre'),
+										'create_at' => date('Y-m-d H:i:s'),
+										'update_at' => date('Y-m-d H:i:s'),
+										'user_create_id' => $this->session->userdata('id'),
+										'activo' => true
+						);
+					}
+					if ($this->Vehiculo_model->insert_entry($table.'s_vehiculos', $data)) {
+						echo 'ok';
+					} else {
+						echo 'Errores al registrar attr vehiculo';
+					}
+        }
+	}
+
+	public function modelo_vehiculo_unico()
+	{
+		// Verifico que el valor de un campo sea unico
+		$name = $this->input->post('nombre');
+		if ($this->Vehiculo_model->modelo_vehiculo_unico($name)) {
+			return true;
 		} else {
-			$data = array(
-							'nombre' => $this->input->post('nombre')
-			);
+			$this->form_validation->set_message('modelo_vehiculo_unico', 'Este %s pertenece a otro vehiculo');
+			return false;
 		}
-		if ($this->Vehiculo_model->insert_entry($table.'s_vehiculos', $data)) {
-			echo 'ok';
-		} else {
-			echo 'Errores al registrar attr vehiculo';
-		}
-	}
-
-
-
-	/* ===================== MARCAS VEHICULOS =============================
-	=======================================================================
-	======================================================================= */
-
-	public function get_marcas()
-	{
-		
-	}
-
-	public function create_marca()
-	{
-		
-	}
-
-	public function edit_marca()
-	{
-		
-	}
-
-	public function update_marca()
-	{
-		
-	}
-
-	public function destroy_marca()
-	{
-		
-	}
-
-	/* ===================== MODELOS VEHICULOS ============================
-	=======================================================================
-	======================================================================= */
-	public function get_modelos()
-	{
-		
-	}
-
-	public function create_modelo()
-	{
-		
-	}
-
-	public function edit_modelo()
-	{
-		
-	}
-
-	public function update_modelo()
-	{
-		
-	}
-
-	public function destroy_modelo()
-	{
-		
-	}
-
-
-	/* ===================== TIPOS VEHICULOS ==============================
-	=======================================================================
-	======================================================================= */
-	public function get_tipos()
-	{
-		
-	}
-
-	public function create_tipo()
-	{
-		
-	}
-
-	public function edit_tipo()
-	{
-		
-	}
-
-	public function update_tipo()
-	{
-		
-	}
-
-	public function destroy_tipo()
-	{
-		
 	}
 
 }
