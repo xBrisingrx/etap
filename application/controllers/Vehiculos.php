@@ -56,13 +56,35 @@ class Vehiculos extends CI_Controller {
 		}
 	}
 
-	public function destroy_marca($id)
+	public function list()
 	{
-		if ($this->Vehiculo_model->destroy_marca($id)) {
-			echo 'ok';
-		} else {
-			echo 'Error';
+		$vehiculos = $this->Vehiculo_model->get('vehiculos');
+		$data = array();
+
+		foreach ($vehiculos as $v) {
+			$row = array();
+			$row[] = $v->interno;
+			$row[] = $v->dominio;
+			$row[] = $v->anio;
+			$row[] = $v->marca;
+			$row[] = $v->modelo;
+			$row[] = $v->tipo;
+			$row[] = $v->n_chasis;
+			$row[] = $v->n_motor;
+			$row[] = $v->cant_asientos;
+			$row[] = $v->empresa;
+			$row[] = $v->observaciones;
+			if ($v->activo) {
+				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_attr_vehiculo('."'".$q->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="modal_delete_attr_vehiculo
+			('."'".$table."','".$q->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+			} else {
+				$row[] = '';
+			}
+			
+			$data[] = $row;
 		}
+		$output = array("data" => $data);
+		echo json_encode($output);
 	}
 
 	/* ===================== Operaciones de attr ==========================
@@ -141,6 +163,15 @@ class Vehiculos extends CI_Controller {
 						echo 'Errores al registrar attr vehiculo';
 					}
         }
+	}
+
+	public function destroy_marca($id)
+	{
+		if ($this->Vehiculo_model->destroy_marca($id)) {
+			echo 'ok';
+		} else {
+			echo 'Error';
+		}
 	}
 
 	public function modelo_vehiculo_unico()

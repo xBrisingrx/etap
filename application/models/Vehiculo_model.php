@@ -11,7 +11,7 @@ class Vehiculo_model extends CI_Model {
   {
   	if($attr != null and $value != null)
   	{
-  		$query = $this->db->get_where('personas', array($attr => $value));
+  		$query = $this->db->get_where('vehiculos', array($attr => $value, 'activo' => true));
       if ($query->num_rows() == 1 ) {
         return $query->row();
       } else {
@@ -19,7 +19,7 @@ class Vehiculo_model extends CI_Model {
       }
   	} else 
     	{
-    		return $this->db->get('personas')->result();
+    		return $this->db->get_where('vehiculos', array('activo' => true))->result();
     	}
   }
 
