@@ -2,7 +2,7 @@
 	<h1> Alta de vehiculo </h1>
 
 	<!-- Form alta de vehiculo -->
-	<form id="form_alta_vehiculo" class="g-brd-around g-brd-gray-light-v4 g-pa-30 g-mb-30" method="POST" action="<?php echo base_url('Vehiculos/create');?>">
+	<form id="form_alta_vehiculo" class="form_new_vehiculo g-brd-around g-brd-gray-light-v4 g-pa-30 g-mb-30" method="POST" action="#">
 	  <!-- Input numero interno -->
 	  <div class="form-group row g-mb-10">
 	    <label class="col-sm-2 col-form-label g-mb-10" for="interno">Interno(*)</label>
@@ -118,7 +118,7 @@
   <!-- End Textarea observaciones -->
   	
   	<div class="row g-mb-10">
-  		<button type="submit" class="btn btn-md u-btn-primary g-mr-10"> Grabar vehiculo </button>
+  		<button type="submit" id="btn_save_vehiculo" class="btn btn-md u-btn-primary g-mr-10"> Grabar vehiculo </button>
   		<button class="btn btn-md u-btn-indigo g-mr-10"> Grabar y cargar otro </button>
   		<a href="<?php echo base_url('Vehiculos');?>" class="btn btn-md u-btn-red g-mr-10"> Cancelar </a>
   	</div>
@@ -127,6 +127,10 @@
 </section>
 
 
+
+<!-- Modales -->
+<!--  -->
+<!--  -->
 <div class="modal fade" id="modal_crud_attr_vehiculos" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -288,6 +292,8 @@
 			type: 'GET',
 			success: function(resp){
 				var attr_vehiculo = $.parseJSON(resp)
+				console.log(attr_vehiculo)
+
 					$('#'+select_id+'').find('option').remove().end().append('<option value="" disabled selected >Seleccione '+type+'</option>')
 					$(attr_vehiculo).each(function(i, element){
 						$('#'+select_id+'').append("<option value="+element.id+">"+element.nombre+"</option>");
@@ -300,13 +306,16 @@
 		});
 	}
 
-	$('#form_alta_vehiculo').submit(function(e){
-		console.log('submit')
+	$('.form_new_vehiculo').submit(function(e){
 		e.preventDefault()
+		console.log('submit')
 		if (form_vehiculo.valid()) {
+			console.log('save')
 			save()
 		}
 	})
+
+
 
 	$('#form_attr_vehiculo').submit(function(e){
 		e.preventDefault();	
@@ -495,17 +504,46 @@
 		}
 	}
 
+	function agrupar_datos()
+	{
+		resp = {
+			'interno' : $('#interno').val(),
+			'dominio' : $('#dominio').val(),
+			'anio' : $('#anio').val(),
+			'marca_id' : $('#marca').val(),
+			'modelo_id' : $('#modelo').val(),
+			'tipo_id' : $('#tipo').val(),
+			'chasis' : $('#chasis').val(),
+			'motor' : $('#motor').val(),
+			'asientos' : $('#asientos').val(),
+			'empresa_id' : $('#empresa').val(),
+			'observaciones' : $('#observaciones').val(),
+		}
 
+		return resp
+	}
 
 	function save()
 	{
-		console.log($('#form_alta_vehiculo').serialize())
-		// $.ajax({
-		// 	url: '<?php echo base_url("Vehiculos/create")?>',
-		// 	type: 'POST',
-		// 	data: $('#form_alta_vehiculo').serialize(),
-
-		// })
+		// console.log($('.form_new_vehiculo').serialize())
+		$.ajax({
+			url: '<?php echo base_url("Vehiculos/create")?>',
+			type: 'POST',
+			data: agrupar_datos(),
+			success: function(resp)
+			{
+				console.log('success add')
+				if (resp === 'ok') {
+					alert('todo bien')
+				} else {
+					alert('error add')
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown)
+			{
+				alert('errors add:  jqXHR: '+ jqXHR + '  textStatus: '+ textStatus + '  errorThrown: '+errorThrown)
+			}
+		})
 	}
 
 

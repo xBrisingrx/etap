@@ -33,7 +33,30 @@ class Vehiculos extends CI_Controller {
 
 	public function create()
 	{
-		
+		$vehiculo = array(
+					'interno' => $this->input->post('interno'),
+					'dominio' => $this->input->post('dominio'),
+					'anio' => $this->input->post('anio'),
+					'marca_id' => $this->input->post('marca_id'),
+					'modelo_id' => $this->input->post('modelo_id'),
+					'tipo_id' => $this->input->post('tipo_id'),
+					'n_chasis' => $this->input->post('chasis'),
+					'n_motor' => $this->input->post('motor'),
+					'cant_asientos' => $this->input->post('asientos'),
+					'empresa_id' => $this->input->post('empresa_id'),
+					'observaciones' => $this->input->post('observaciones'),
+					'update_at' => date('Y-m-d H:i:s'),
+					'create_at' => date('Y-m-d H:i:s'),
+					'user_create_id' => $this->session->userdata('id'),
+					'user_last_update_id' => $this->session->userdata('id'),
+					'activo' => true
+		);
+
+		if ($this->Vehiculo_model->insert_entry('vehiculos', $vehiculo)) {
+			echo 'ok';
+		} else {
+			echo 'error';
+		}
 	}
 
 	public function edit()
