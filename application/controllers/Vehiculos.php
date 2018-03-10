@@ -7,6 +7,7 @@ class Vehiculos extends CI_Controller {
 	{
 	  parent::__construct();
 		$this->load->model('Vehiculo_model');
+		$this->load->model('Empresa_model');
 	  date_default_timezone_set('America/Argentina/Buenos_Aires'); 
 	}
 
@@ -23,9 +24,10 @@ class Vehiculos extends CI_Controller {
 	public function new()
 	{
 		$title['title'] = 'Alta de vehiculo';
+		$data['empresas'] = $this->Empresa_model->get('activo', true);
 		$this->load->view('includes/header',$title);
 		$this->load->view('includes/nav');
-		$this->load->view('sistema/vehiculos/new');
+		$this->load->view('sistema/vehiculos/new', $data);
 		$this->load->view('includes/footer');	
 	}
 

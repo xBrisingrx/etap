@@ -8,7 +8,7 @@
 	    <label class="col-sm-2 col-form-label g-mb-10" for="interno">Interno(*)</label>
 
 	    <div class="col-sm-9">
-	      <input id="interno" class="form-control u-form-control rounded-0" placeholder="Ingrese número de interno" type="text">
+	      <input id="interno" class="form-control u-form-control rounded-0" placeholder="Ingrese número de interno" type="text" required>
 	    </div>
 	  </div>
 	  <!-- End Input numero interno -->
@@ -18,7 +18,7 @@
 	    <label class="col-sm-2 col-form-label g-mb-10" for="dominio">Dominio(*)</label>
 
 	    <div class="col-sm-9">
-	      <input id="dominio" class="form-control u-form-control rounded-0" placeholder="Ingrese dominio" type="text">
+	      <input id="dominio" class="form-control u-form-control rounded-0" placeholder="Ingrese dominio" type="text" required>
 	    </div>
 	  </div>
 	  <!-- End Input numero dominio -->
@@ -28,7 +28,7 @@
 	    <label class="col-sm-2 col-form-label g-mb-10" for="anio">Año(*)</label>
 
 	    <div class="col-sm-9">
-	      <input id="anio" class="form-control u-form-control rounded-0" placeholder="Ingrese año" type="text">
+	      <input id="anio" class="form-control u-form-control rounded-0" placeholder="Ingrese año" type="text" required>
 	    </div>
 	  </div>
 	  <!-- End Input numero año -->
@@ -36,7 +36,7 @@
 	  <!-- Select marca vehiculo -->
 	  <div class="form-group row g-mb-10">
 		  <label class="col-sm-2 col-form-label g-mb-10" for="marca">Marca(*)</label>
-		  <select class="custom-select sm-9" id="marca">
+		  <select class="custom-select sm-9" id="marca" required>
 		  	<option value="" disabled selected >Seleccione marca</option>
 		  	<!-- populate with ajax -->
 		  </select>
@@ -47,7 +47,7 @@
 	  <!-- Select modelo vehiculo -->
 	  <div class="form-group row g-mb-10">
 		  <label class="col-sm-2 col-form-label g-mb-10" for="modelo">Modelo(*)</label>
-		  <select class="custom-select sm-9" id="modelo">
+		  <select class="custom-select sm-9" id="modelo" required>
 		  	<option value="" disabled selected >Seleccione modelo</option>
 		   <!-- populate with ajax -->
 		  </select>
@@ -58,7 +58,7 @@
 	  <!-- Select tipo vehiculo -->
 	  <div class="form-group row g-mb-10">
 		  <label class="col-sm-2 col-form-label g-mb-10" for="tipo">Tipo(*)</label>
-		  <select class="custom-select sm-9" id="tipo">
+		  <select class="custom-select sm-9" id="tipo" required>
 		  	<option value="" disabled selected >Seleccione tipo</option>
 		    <!-- populate with ajax -->
 		  </select>
@@ -71,7 +71,7 @@
 	    <label class="col-sm-2 col-form-label g-mb-10" for="chasis">Nro. chasis(*)</label>
 
 	    <div class="col-sm-9">
-	      <input id="chasis" class="form-control u-form-control rounded-0" placeholder="Ingrese número de chasis" type="text">
+	      <input id="chasis" class="form-control u-form-control rounded-0" placeholder="Ingrese número de chasis" type="text" required>
 	    </div>
 	  </div>
 	  <!-- End Input numero chasis -->
@@ -81,17 +81,17 @@
 	    <label class="col-sm-2 col-form-label g-mb-10" for="motor">Nro. motor(*)</label>
 
 	    <div class="col-sm-9">
-	      <input id="motor" class="form-control u-form-control rounded-0" placeholder="Ingrese número de motor" type="text">
+	      <input id="motor" class="form-control u-form-control rounded-0" placeholder="Ingrese número de motor" type="text" required>
 	    </div>
 	  </div>
 	  <!-- End Input numero motor -->
 
 	  <!-- Input numero asientos -->
 	  <div class="form-group row g-mb-10">
-	    <label class="col-sm-2 col-form-label g-mb-10" for="asientos">Cant chasis(*)</label>
+	    <label class="col-sm-2 col-form-label g-mb-10" for="asientos">Cant asientos(*)</label>
 
 	    <div class="col-sm-9">
-	      <input id="asientos" class="form-control u-form-control rounded-0" placeholder="Ingrese cantidad de asientos" type="text">
+	      <input id="asientos" class="form-control u-form-control rounded-0" placeholder="Ingrese cantidad de asientos" type="text" required>
 	    </div>
 	  </div>
 	  <!-- End Input numero asientos -->
@@ -99,11 +99,11 @@
 	  <!-- Select empresa -->
 	  <div class="form-group row g-mb-10">
 		  <label class="col-sm-2 col-form-label g-mb-10" for="empresa">Pertenece a empresa(*)</label>
-		  <select class="custom-select sm-9" id="empresa">
+		  <select class="custom-select sm-9" id="empresa" required>
 		    <option selected=""> Seleccione empresa </option>
-		    <option value="1">One</option>
-		    <option value="2">Two</option>
-		    <option value="3">Three</option>
+		    <?php foreach ($empresas as $e): ?>
+		    	<option value="<?php echo $e->id;?>"><?php echo $e->nombre;?></option>
+		    <?php endforeach ?>
 		  </select>
 	  </div>
 	  <!-- End Select empresa -->
@@ -266,6 +266,11 @@
 																'nombre_attr': { required: true	}
 															}
 														});
+	var form_vehiculo = $('#form_alta_vehiculo').validate({
+												rules: {
+													'interno': {number: true}
+												}
+	})
 
 
 	// Genero el option select , el type es el atributo que vamos a elegir, el cual puede ser marca, modelo o tipo vehiculo
@@ -295,6 +300,13 @@
 		});
 	}
 
+	$('#form_alta_vehiculo').submit(function(e){
+		console.log('submit')
+		e.preventDefault()
+		if (form_vehiculo.valid()) {
+			save()
+		}
+	})
 
 	$('#form_attr_vehiculo').submit(function(e){
 		e.preventDefault();	
@@ -483,6 +495,18 @@
 		}
 	}
 
+
+
+	function save()
+	{
+		console.log($('#form_alta_vehiculo').serialize())
+		// $.ajax({
+		// 	url: '<?php echo base_url("Vehiculos/create")?>',
+		// 	type: 'POST',
+		// 	data: $('#form_alta_vehiculo').serialize(),
+
+		// })
+	}
 
 
 	$(document).ready(function(){
