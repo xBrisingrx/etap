@@ -19,7 +19,16 @@ class Vehiculo_model extends CI_Model {
       }
   	} else 
     	{
-    		return $this->db->get_where('vehiculos', array('activo' => true))->result();
+    		$this->db->select('vehiculos.id,vehiculos.interno, vehiculos.dominio, vehiculos.anio,marcas_vehiculos.nombre as marca, 
+                           modelos_vehiculos.nombre as modelo, tipos_vehiculos.nombre as tipo, vehiculos.n_chasis, 
+                           vehiculos.n_motor, vehiculos.cant_asientos, empresas.nombre as empresa, vehiculos.observaciones')
+                    ->from('vehiculos')
+                      ->join('marcas_vehiculos', 'marcas_vehiculos.id = vehiculos.marca_id')
+                      ->join('modelos_vehiculos', 'modelos_vehiculos.id = vehiculos.modelo_id')
+                      ->join('tipos_vehiculos', 'tipos_vehiculos.id = vehiculos.tipo_id')
+                      ->join('empresas', 'empresas.id = vehiculos.empresa_id')
+                        ->where('vehiculos.activo', true);
+        return $this->db->get()->result();
     	}
   }
 

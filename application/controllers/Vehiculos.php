@@ -96,12 +96,9 @@ class Vehiculos extends CI_Controller {
 			$row[] = $v->cant_asientos;
 			$row[] = $v->empresa;
 			$row[] = $v->observaciones;
-			if ($v->activo) {
-				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_attr_vehiculo('."'".$q->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="modal_delete_attr_vehiculo
-			('."'".$table."','".$q->id."'".')" ><i class="fa fa-trash-o"></i></button>';
-			} else {
-				$row[] = '';
-			}
+			$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_attr_vehiculo('."'".$v->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="modal_delete_attr_vehiculo
+			('."'".$v->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+
 			
 			$data[] = $row;
 		}
