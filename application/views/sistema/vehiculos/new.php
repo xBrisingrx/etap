@@ -119,8 +119,8 @@
   	
   	<div class="row g-mb-10">
   		<button type="submit" class="btn btn-md u-btn-primary g-mr-10"> Grabar vehiculo </button>
-  		<button type="submit" class="btn btn-md u-btn-indigo g-mr-10"> Grabar y cargar otro </button>
-  		<button type="submit" class="btn btn-md u-btn-red g-mr-10"> Cancelar </button>
+  		<button class="btn btn-md u-btn-indigo g-mr-10"> Grabar y cargar otro </button>
+  		<a href="<?php echo base_url('Vehiculos');?>" class="btn btn-md u-btn-red g-mr-10"> Cancelar </a>
   	</div>
 	</form>
 	<!-- End form alta vehiculo -->
@@ -137,7 +137,7 @@
         </button>
       </div>
       <div class="modal-body">
-      	<form id="form_attr_vehiculo">
+      	<form id="form_attr_vehiculo" class="form_attr_vehiculo">
       		<!-- Tipo de attr para discriminar entre marca/modelo/tip -->
       		<input type="hidden" id="tipo_attr" name="tipo_attr" value="">
 
@@ -180,7 +180,7 @@
         </button>
       </div>
       <div class="modal-body">
-      	<form id="form_modelo_vehiculo">
+      	<form id="form_modelo_vehiculo" class="form_attr_vehiculo">
       		<!-- Tipo de attr para discriminar entre marca/modelo/tip -->
       		<input type="hidden" id="tipo_attr" name="tipo_attr" value="">
 
@@ -261,7 +261,7 @@
 	        return /^[ a-záéíóúüñ]*$/i.test(value);
 	    }, "Ingrese sólo letras.");
 
-	var form_attr_vehiculo = $('#form_attr_vehiculo').validate({
+	var form_attr_vehiculo = $('.form_attr_vehiculo').validate({
 															rules: {
 																'nombre_attr': { required: true	}
 															}
@@ -363,12 +363,14 @@
 						$('.btnSave').prop( "disabled", false )
 						$('.btnSave').text( 'Grabar '+table )
 						$('#form_attr_vehiculo')[0].reset()
+						$('.alert-msg-vehiculos').html('')
 						print_attributes(table, table)
 						tabla_attr_vehiculos.ajax.reload(null,false)
 					} else {
 						$('#btn_save_modelo').text('Grabar modelo')
 						$('#btn_save_modelo').prop( "disabled", false )
 						$('#form_modelo_vehiculo')[0].reset()
+						$('.alert-msg-vehiculos').html('')
 						print_attributes(table, table)
 						tabla_modelos_vehiculos.ajax.reload(null,false)
 					}
@@ -462,6 +464,8 @@
 		url = "<?php echo base_url('Vehiculos/list_attr/');?>"+nombre_attr
 		$('.btnSave').prop( "disabled", false )
 		$('.alert-msg-vehiculos').html('')
+		$('.form-control').removeClass('error');
+		$('.error').empty();
 		if (nombre_attr == 'modelo') {
 			$('#form_modelo_vehiculo')[0].reset()
 			tabla_modelos_vehiculos.ajax.url(url).load()

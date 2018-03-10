@@ -62,13 +62,21 @@ class Vehiculo_model extends CI_Model {
       }
   }
 
-  public function modelo_vehiculo_unico($name)
+  public function modelo_vehiculo_unico($marca_id,$name)
   {
     // Si retorna 0 es que el valor no se encuentra en la BD
-    $this->db->select('*')
+    $query = $this->db->select('*')
                 ->from('modelos_vehiculos')
-                  ->join('marcas_vehiculos', 'marcas_vehiculos.id = modelos_vehiculos.marca_vehiculo_id');
-    return ($this->db->get()->num_rows() == 0);
+                  ->join('marcas_vehiculos', 'marcas_vehiculos.id = modelos_vehiculos.marca_vehiculo_id')
+                    ->where(array('modelos_vehiculos.nombre' => $name, 'modelos_vehiculos.marca_vehiculo_id' => $marca_id))
+                      ->get();
+                    // ->where('modelos_vehiculos.marca_vehiculo_id = "'.$marca_id.'"');
+    if ( $query->num_rows() > 0 ) {
+      // Se encuentro en la BD
+      return false;
+    } else {
+      return true;
+    }
   }
 
 

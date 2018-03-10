@@ -7,9 +7,6 @@ class Vehiculos extends CI_Controller {
 	{
 	  parent::__construct();
 		$this->load->model('Vehiculo_model');
-	  $this->load->model('Marca_vehiculo_model');
-	  $this->load->model('Modelo_vehiculo_model');
-	  $this->load->model('Tipo_vehiculo_model');
 	  date_default_timezone_set('America/Argentina/Buenos_Aires'); 
 	}
 
@@ -92,13 +89,15 @@ class Vehiculos extends CI_Controller {
 	======================================================================= */
 	public function _validate_attr($table)
 	{ if ($table != 'modelos_vehiculos') {
-		$this->form_validation->set_rules('nombre', 'Nombre', 'is_unique['.$table.'.nombre]|trim');
+		$this->form_validation->set_rules('nombre', 'Nombre', 'required|is_unique['.$table.'.nombre]|trim');
 	} else {
-		$this->form_validation->set_rules('nombre', 'Nombre', 'is_unique['.$table.'.nombre]|trim|callback_modelo_vehiculo_unico');
+		$this->form_validation->set_rules('nombre', 'Nombre', 'required|callback_modelo_vehiculo_unico|trim');
+		$this->form_validation->set_rules('marca_id', 'Marca', 'required|callback_modelo_vehiculo_unico|trim');
 	}
 		
 
 		$this->form_validation->set_message('is_unique', 'Este nombre ya esta en uso');
+		$this->form_validation->set_message('required', 'Campo %s es obligatorio');
 	}
 
 	public function get_attr($table, $attr = null,$value = null)
@@ -178,7 +177,9 @@ class Vehiculos extends CI_Controller {
 	{
 		// Verifico que el valor de un campo sea unico
 		$name = $this->input->post('nombre');
-		if ($this->Vehiculo_model->modelo_vehiculo_unico($name)) {
+		$marca_id =  $this->input->post('marca_id');
+		// Si el modelo ingresado no se encuentra en la BD
+		if ($this->Vehiculo_model->modelo_vehiculo_unico($marca_id, $name)) {
 			return true;
 		} else {
 			$this->form_validation->set_message('modelo_vehiculo_unico', 'Este %s pertenece a otro vehiculo');
