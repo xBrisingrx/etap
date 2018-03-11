@@ -59,14 +59,38 @@ class Vehiculos extends CI_Controller {
 		}
 	}
 
-	public function edit()
+	public function edit($id)
 	{
-		
+		$vehiculo = $this->Vehiculo_model->get('id',$id);
+		$json = json_encode($vehiculo);
+		echo $json;
 	}
 
 	public function update()
 	{
-		
+		$vehiculo_id = $this->input->post('vehiculo_id');
+
+		$vehiculo = array(
+					'interno' => $this->input->post('interno'),
+					'dominio' => $this->input->post('dominio'),
+					'anio' => $this->input->post('anio'),
+					'marca_id' => $this->input->post('marca_id'),
+					'modelo_id' => $this->input->post('modelo_id'),
+					'tipo_id' => $this->input->post('tipo_id'),
+					'n_chasis' => $this->input->post('chasis'),
+					'n_motor' => $this->input->post('motor'),
+					'cant_asientos' => $this->input->post('asientos'),
+					'empresa_id' => $this->input->post('empresa_id'),
+					'observaciones' => $this->input->post('observaciones'),
+					'update_at' => date('Y-m-d H:i:s'),
+					'user_last_update_id' => $this->session->userdata('id'),
+		);
+
+		if ($this->Vehiculo_model->update_entry('vehiculos', $vehiculo_id, $vehiculo)) {
+			echo 'ok';
+		} else {
+			echo 'Error al actualizar data';
+		}
 	}
 
 	public function destroy($table, $id)
@@ -80,7 +104,7 @@ class Vehiculos extends CI_Controller {
 
 	public function list()
 	{
-		$vehiculos = $this->Vehiculo_model->get('vehiculos');
+		$vehiculos = $this->Vehiculo_model->get();
 		$data = array();
 
 		foreach ($vehiculos as $v) {
@@ -96,10 +120,11 @@ class Vehiculos extends CI_Controller {
 			$row[] = $v->cant_asientos;
 			$row[] = $v->empresa;
 			$row[] = $v->observaciones;
-			$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_attr_vehiculo('."'".$v->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="modal_delete_attr_vehiculo
-			('."'".$v->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+			$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_vehiculo('."'".$v->id."'".')" >
+								<i class="fa fa-edit"></i></button> 
+								<button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" 
+								onclick="delete_vehiculo('."'".$v->id."'".')" ><i class="fa fa-trash-o"></i></button>';
 
-			
 			$data[] = $row;
 		}
 		$output = array("data" => $data);

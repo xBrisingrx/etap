@@ -8,6 +8,7 @@
 	  <script src="<?php echo base_url('assets/vendor/popper.min.js');?>"></script>
 	  <script src="<?php echo base_url('assets/vendor/tether.js');?>"></script>
 	  <script src="<?php echo base_url('assets/vendor/bootstrap/bootstrap.min.js');?>"></script>
+    
 
 	  <!-- JS Implementing Plugins -->
 	  <script src="<?php echo base_url('assets/vendor/hs-megamenu/src/hs.megamenu.js');?>"></script>
