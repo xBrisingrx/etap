@@ -13,7 +13,7 @@
             </button>
             <!-- End Responsive Toggle Button -->
             <!-- Logo -->
-            <a href="../../../index.html" class="navbar-brand">
+            <a href="<?php echo base_url();?>" class="navbar-brand">
               <img src="../../../assets/img/logo/logo-1.png" alt="Image Description">
             </a>
             <!-- End Logo -->
