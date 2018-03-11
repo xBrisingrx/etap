@@ -1,7 +1,7 @@
 <section class="container-fluid g-py-10">
-	<h1>Perfiles registrados en el sistema</h1>
+	<h1>Atributos registrados en el sistema</h1>
     <div class="row g-py-10">
-    	<button class="btn btn-success justify-content-end" onclick="create_profile()"> Nuevo perfil </button>
+    	<button class="btn btn-success justify-content-end" onclick="create_attribute()"> Nuevo atributo </button>
     </div>
 
 	<!-- Hover Rows -->
@@ -189,7 +189,7 @@
 
 
 				<button id="btnSave" type="submit" class="btn btn-primary" ></button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" data-dismiss="modal" class="btn btn-md u-btn-red g-mr-10"> Cerrar </button>
         </form>
       </div>
     </div>
@@ -214,8 +214,8 @@
        	<p id="description_attribute_delete"><strong>Detalle: </strong></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn u-btn-red" onclick="destroy_attribute()">Eliminar</button>
-        <button type="button" class="btn u-btn-indigo" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-md u-btn-red g-mr-10" onclick="destroy_attribute()">Eliminar</button>
+        <button type="button" data-dismiss="modal" class="btn btn-md u-btn-indigo g-mr-10"> Cerrar </button>
       </div>
     </div>
   </div>
@@ -258,7 +258,7 @@
 															}
 														});
 
-	function create_profile()
+	function create_attribute()
 	{
 		save_method = 'create';
 		$('#form_atributos')[0].reset();
@@ -269,7 +269,7 @@
 		$('#modal_form_atributo').modal('show');
 	}	
 
-	function edit_profile(id)
+	function edit_attribute(id)
 	{
 		save_method = 'update';
 		$('#form_atributos')[0].reset();

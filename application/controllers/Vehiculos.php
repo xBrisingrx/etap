@@ -95,7 +95,7 @@ class Vehiculos extends CI_Controller {
 
 	public function destroy($table, $id)
 	{
-		if ($this->Vehiculo_model->detroy($table, $id)) {
+		if ($this->Vehiculo_model->destroy($table, $id)) {
 			echo 'ok';
 		} else {
 			echo 'Ocurrio un error al eliminar el registro';
@@ -123,7 +123,7 @@ class Vehiculos extends CI_Controller {
 			$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit_vehiculo('."'".$v->id."'".')" >
 								<i class="fa fa-edit"></i></button> 
 								<button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" 
-								onclick="delete_vehiculo('."'".$v->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+								onclick="modal_delete('."'".$v->id."'".')" ><i class="fa fa-trash-o"></i></button>';
 
 			$data[] = $row;
 		}

@@ -239,22 +239,8 @@
         <!-- End Empresa input -->
 
         <button id="submit_editar_persona" type="submit" class="btn btn-primary g-mr-10 g-mb-15">Editar datos</button>
-        <button type="button" class="btn btn-danger g-mr-10 g-mb-15" data-dismiss="modal">Close</button>
+        <button type="button" data-dismiss="modal" class="btn btn-md u-btn-red g-mr-10"> Cerrar </button>
         </form>
-    </div>
-  </div>
-</div>
-
-
-<div id="modal-2" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Datos actualizados con exito</h5>
-      </div>
-      <div class="modal-footer">
-        <button id="myInput" type="button" class="btn btn-primary">Cerrar</button>
-      </div>
     </div>
   </div>
 </div>
