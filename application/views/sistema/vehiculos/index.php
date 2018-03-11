@@ -178,7 +178,7 @@
           
           <div class="row g-mb-10">
             <button type="submit" id="btn_save_vehiculo" class="btn btn-md u-btn-primary g-mr-10"> Grabar cambios </button>
-            <a href="<?php echo base_url('Vehiculos');?>" class="btn btn-md u-btn-red g-mr-10"> Cancelar </a>
+            <button type="button" data-dismiss="modal" class="btn btn-md u-btn-red g-mr-10"> Cerrar </button>
           </div>
         </form>
         <!-- End form alta vehiculo -->
@@ -187,7 +187,28 @@
 </div>
 
 
-
+<!-- ##################################### Modal destroy vehiculo   ############################################################## -->
+<div class="modal fade" id="modal_delete_vehiculo" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">¿ Esta seguro de eliminar este vehiculo ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="vehiculo_delete_id" name="vehiculo_delete_id" value="">
+        <p id="vehiculo_dominio_delete"> </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn u-btn-red" onclick="destroy()">Eliminar</button>
+        <button type="button" class="btn u-btn-indigo" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ############################################################################################################################# -->
 
 <script type="text/javascript">
   let base_url = '<?php echo base_url()?>'
@@ -197,7 +218,6 @@
                                   'interno': {number: true}
                                 }
                               })
-  // var notify = $.notify('...')
 
   function print_option_select(select_id, type, id_seleccionado, attr = null, id = null)
   {
@@ -235,11 +255,6 @@
 
   function edit_vehiculo(id)
   {
-    $('body').notify({
-      message: 'Hello World',
-      type: 'danger'
-    });
-    
     $.ajax({
       url: base_url + 'Vehiculos/edit/' + id,
       type: 'GET',
@@ -321,7 +336,48 @@
      }
   })
 
-
+// Llamo al modal de advertencia para eliminar el perfil
+  function modal_delete(id)
+  {
+    $('#modal_delete_vehiculo #vehiculo_dominio_delete').html('<strong>Dominio: </strong>')
+    $.ajax({
+      url: "<?php echo base_url('Vehiculos/edit/');?>" + id,
+      type: "GET",
+      dataType: "JSON",
+      success: function(resp)
+      {
+        $('#modal_delete_vehiculo #vehiculo_delete_id').val(resp.id);
+        $('#modal_delete_vehiculo #vehiculo_dominio_delete').append(resp.dominio);
+        $('#modal_delete_vehiculo').modal('show');
+      },
+      error: function()
+      {
+        alert('Error al obtener los datos');
+      }
+    });
+  }
+  // Baja logica del vehiculo
+  function destroy()
+  {
+    let vehiculo_id = $('#vehiculo_delete_id').val();
+    $.ajax({
+      url: "<?php echo base_url('Vehiculos/destroy/vehiculos/');?>" + vehiculo_id,
+      type: "POST",
+      success: function(msg)
+      {
+        if (msg === 'ok') {
+          tabla_vehiculos.ajax.reload(null,false);
+          $('#modal_delete_vehiculo').modal('hide');
+        } else {
+          alert('Error al intentar eliminar el atributo');
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown)
+      {
+        alert('Fallo el eliminar atributo');
+      }
+    });
+  }
 //   $('.editar_vehiculo').click(function(){
 //     var vehiculo_id = $(this).data('id');
 //     $.ajax({
