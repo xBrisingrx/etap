@@ -365,7 +365,8 @@
 		});
 	}
 
-
+// ###############################################################
+// ###############################################################
 // Funciones para operaciones de asignacion de atributos al perfil
 
 	// Obtengo los perfiles para imprimirlos en el select de asignar atributo al perfil

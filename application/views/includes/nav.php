@@ -30,7 +30,7 @@
                       <a href="<?php echo base_url('Personas/new');?>">Nueva persona</a>
                     </li>
                     <li>
-                      <a href="<?php echo base_url('');?>">Asignacion de perfiles</a>
+                      <a href="<?php echo base_url('Perfiles/asignacion_perfiles/1');?>">Asignacion de perfiles</a>
                     </li>
                     <li>
                       <a href="<?php echo base_url('Perfiles/index/1');?>">Admin de perfiles</a>
@@ -52,7 +52,7 @@
                       <a href="<?php echo base_url('Vehiculos/new');?>">Nuevo vehiculo</a>
                     </li>
                     <li>
-                      <a href="<?php echo base_url('');?>">Asignacion de perfiles</a>
+                      <a href="<?php echo base_url('Perfiles/asignacion_perfiles/2');?>">Asignacion de perfiles</a>
                     </li>
                     <li>
                       <a href="<?php echo base_url('Perfiles/index/2');?>">Admin de perfiles</a>

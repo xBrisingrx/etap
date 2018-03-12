@@ -8,6 +8,8 @@ class Perfiles extends CI_Controller {
 	  parent::__construct();
 	  $this->load->model('Perfil_model');
 	  $this->load->model('Perfiles_Atributos_model');
+	  $this->load->model('Perfiles_Personas_model');
+	  $this->load->model('Perfiles_Vehiculos_model');
 	  date_default_timezone_set('America/Argentina/Buenos_Aires'); 
 	}
 
@@ -191,6 +193,72 @@ class Perfiles extends CI_Controller {
 	{
 		$profiles = $this->Perfil_model->get('tipo',$tipo);
 		echo ( json_encode($profiles) );
+	}
+
+
+	// Asignacion de perfiles es la vista para asignar perfiles a persoans o vehiculos
+	// Tipo perfil seria el tipo para personas o tipo para vehiculos
+	public function asignacion_perfiles($tipo_perfil)
+	{
+		$title['title'] = 'Asignacion de perfiles';
+		$data['nombre_perfil'] = ($tipo_perfil == 1) ? 'Personal' : 'Vechículos';
+		$data['tipo_perfil'] = $tipo_perfil;
+		$data['perfiles'] = $this->Perfil_model->get('tipo',$tipo_perfil);
+
+		// A quien asigno el perfil y encabezado de la tabla
+		if ($tipo_perfil == 1) {
+			// Personas
+			$data['asigno'] = $this->Perfiles_Personas_model->get();
+			$data['columnas_tabla'] = array('Apellido', 'Nombre', 'DNI', 'CUIL', 'Perfil', 
+																			'Fecha inicio vigencia', 'Fecha baja', 'Acciones');
+		} else {
+			// Vehiculos
+			$data['asigno'] = $this->Perfiles_Vehiculos_model->get();
+			$data['columnas_tabla'] = array('Interno', 'Dominio', 'Marca', 'Año', 'Modelo', 'Perfil', 
+																			'Fecha inicio vigencia', 'Fecha baja', 'Acciones');
+		}
+		$this->load->view('includes/header',$title);
+		$this->load->view('includes/nav');
+		$this->load->view('sistema/perfiles/asignacion',$data);
+		$this->load->view('includes/footer');
+	}
+
+	public function list_perfiles_asignados($tipo_perfil)
+	{
+		$data = array();
+		if ($tipo_perfil == 1) {
+			$perfiles_asignados = $this->Perfiles_Personas_model->get();
+			foreach ($perfiles_asignados as $p) {
+				$row = array();
+				$row[] = $p->nombre_persona;
+				$row[] = $p->apellido_persona;
+				$row[] = $p->dni;
+				$row[] = $p->cuil;
+				$row[] = $p->nombre_perfil;
+				$row[] = date('d-m-Y', strtotime($p->fecha_inicio_vigencia));
+				$row[] = ($p->activo) ? ' ' : date('d-m-Y', strtotime($p->update_at));
+				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="modal_edit_attribute('."'".$p->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="delete_attribute_profile('."'".$p->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+				$data[] = $row;
+			} // end foreach
+		} else {
+			$perfiles_asignados = $this->Perfiles_Vehiculos_model->get();
+			foreach ($perfiles_asignados as $p) {
+				$row = array();
+				$row[] = $p->interno;
+				$row[] = $p->dominio;
+				$row[] = $p->anio;
+				$row[] = $p->marca;
+				$row[] = $p->modelo;
+				$row[] = $p->nombre_perfil;
+				$row[] = date('d-m-Y', strtotime($p->fecha_inicio_vigencia));
+				$row[] = ($p->activo) ? ' ' : date('d-m-Y', strtotime($p->update_at));
+				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="modal_edit_attribute('."'".$p->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="delete_attribute_profile('."'".$p->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+				$data[] = $row;
+			} // end foreach
+		} // end else 
+		
+		$output = array("data" => $data);
+		echo json_encode($output);
 	}
 
 }
