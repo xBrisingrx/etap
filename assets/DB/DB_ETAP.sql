@@ -43,7 +43,7 @@ CREATE TABLE `atributos` (
   `periodo_vencimiento` varchar(45) DEFAULT NULL,
   `permite_modificar_proximo_vencimiento` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +52,7 @@ CREATE TABLE `atributos` (
 
 LOCK TABLES `atributos` WRITE;
 /*!40000 ALTER TABLE `atributos` DISABLE KEYS */;
-INSERT INTO `atributos` VALUES (1,'attr1','ATR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-02-27 23:29:46',0,1,NULL,NULL,NULL),(2,'attr2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,NULL,NULL,NULL),(3,'Name attr','',NULL,NULL,0,NULL,NULL,NULL,'2018-02-14',123,NULL,'2018-02-27 21:25:53','2018-02-27 21:25:53',1,1,NULL,NULL,NULL),(4,'Card','asdasdasdasdasd',0,NULL,NULL,NULL,NULL,'asdasdasdasdasdasdas','2018-02-20',1112,NULL,'2018-02-27 21:40:04','2018-02-28 17:01:43',0,1,NULL,'',NULL),(5,'Card','aaaaaaaaaaaaaaaaa',NULL,NULL,NULL,NULL,NULL,'aaaaaaaaaaaaaaaaa','2018-02-20',88,NULL,'2018-02-28 17:02:25','2018-02-28 17:02:25',1,1,NULL,NULL,NULL),(6,'nueve','999999999999999',0,NULL,0,NULL,NULL,'999999999999999','2018-02-28',88,NULL,'2018-02-28 19:20:26','2018-02-28 19:20:26',1,1,NULL,'',NULL),(7,'opchrrteaq','999999999999999',0,NULL,0,0,NULL,'999999999999999','2018-02-07',90,NULL,'2018-02-28 19:22:31','2018-02-28 19:22:31',1,1,NULL,'',NULL),(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-03-11 16:12:21','2018-03-11 16:12:21',1,NULL,NULL,NULL,NULL),(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-03-11 16:14:47','2018-03-11 16:14:47',1,NULL,NULL,NULL,NULL),(10,'Cedula','Atributo cedula',0,NULL,0,0,NULL,'Atributo cedula','2018-03-08',0,NULL,'2018-03-11 16:27:07','2018-03-11 16:27:07',1,2,'0','true',NULL),(11,'Cedula','atributo cedula',0,NULL,0,0,NULL,'atributo cedula','2018-03-01',0,NULL,'2018-03-11 16:31:03','2018-03-11 16:31:03',1,2,'0','true',NULL),(12,'Cupo de combustrible','VEHICULOS ASIGANDOS A UN CUPO DE COMBUSTIBLE POR PROVINCIA',0,NULL,0,0,NULL,'SE ENVIA LA RENOVACION DE LA VTV CADA VEZ QUE VENZA POR CORREO A DIRECCION DE TTE EN RAWSON','2018-03-10',8,NULL,'2018-03-11 16:47:41','2018-03-11 16:47:41',1,2,NULL,'0',NULL),(13,'Desinfeccion','Descripcion de desinfeccion',0,NULL,0,0,'Sin obs grales','SE ENVIA RENOVACIONES DE VTV CON PAGO DE PATENTES Y SEGURO A LA DIRECCION DE TTE EN KM3, EN KM4 SE MANDAN LOS CARTONES PARA EL SELLADO, LUEGO SE PAGA, SE CONTROLA Y SE ENVIA NUEVAMENTE A KM3','2018-02-28',0,NULL,'2018-03-11 21:37:04','2018-03-11 21:37:04',1,2,'Mensual','',0),(14,'valuevaluevaluevaluevalue','valuevaluevaluevaluevalue',0,NULL,0,0,'valuevalue','valuevaluevaluevaluevalue','2018-03-14',123123,0,'2018-03-11 22:09:09','2018-03-11 22:09:09',1,2,'Seleccione','',0),(15,'Shijamaru','ShijamaruShijamaruShijamaruShijamaru',0,NULL,0,0,'ShijamaruShijamaruShijamaru','ShijamaruShijamaruShijamaru','2018-03-13',888,0,'2018-03-11 22:12:38','2018-03-11 22:12:38',1,2,'Quincenal','',0),(16,'Shijamaru','ShijamaruShijamaruShijamaruShijamaru',1,NULL,1,1,'ShijamaruShijamaruShijamaru','ShijamaruShijamaruShijamaru','2018-03-13',888,1,'2018-03-11 22:15:18','2018-03-11 22:15:18',1,2,'Quincenal','',1),(17,'Linea turismo','Linea turismoLinea turismoLinea turismo',1,'Seguros',1,1,'Linea turismoLinea turismoLinea turismoLinea turismo','Linea turismoLinea turismoLinea turismoLinea turismo','2018-02-28',56,1,'2018-03-11 22:26:53','2018-03-11 22:26:53',1,2,'Seleccione','',1);
+INSERT INTO `atributos` VALUES (1,'attr1','ATR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-02-27 23:29:46',0,1,NULL,NULL,NULL),(2,'attr2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,NULL,NULL,NULL),(3,'Name attr','',NULL,NULL,0,NULL,NULL,NULL,'2018-02-14',123,NULL,'2018-02-27 21:25:53','2018-02-27 21:25:53',1,1,NULL,NULL,NULL),(4,'Card','asdasdasdasdasd',0,NULL,NULL,NULL,NULL,'asdasdasdasdasdasdas','2018-02-20',1112,NULL,'2018-02-27 21:40:04','2018-02-28 17:01:43',0,1,NULL,'',NULL),(5,'Card','aaaaaaaaaaaaaaaaa',NULL,NULL,NULL,NULL,NULL,'aaaaaaaaaaaaaaaaa','2018-02-20',88,NULL,'2018-02-28 17:02:25','2018-02-28 17:02:25',1,1,NULL,NULL,NULL),(6,'nueve','999999999999999',0,NULL,0,NULL,NULL,'999999999999999','2018-02-28',88,NULL,'2018-02-28 19:20:26','2018-02-28 19:20:26',1,1,NULL,'',NULL),(7,'opchrrteaq','999999999999999',0,NULL,0,0,NULL,'999999999999999','2018-02-07',90,NULL,'2018-02-28 19:22:31','2018-02-28 19:22:31',1,1,NULL,'',NULL),(8,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-03-11 16:12:21','2018-03-11 16:12:21',1,NULL,NULL,NULL,NULL),(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-03-11 16:14:47','2018-03-11 16:14:47',1,NULL,NULL,NULL,NULL),(10,'Cedula','Atributo cedula',0,NULL,0,0,NULL,'Atributo cedula','2018-03-08',0,NULL,'2018-03-11 16:27:07','2018-03-12 00:44:24',0,2,'0','true',NULL),(11,'Cedula','atributo cedula',0,NULL,0,0,NULL,'atributo cedula','2018-03-01',0,NULL,'2018-03-11 16:31:03','2018-03-12 00:44:27',0,2,'0','true',NULL),(12,'Cupo de combustrible','VEHICULOS ASIGANDOS A UN CUPO DE COMBUSTIBLE POR PROVINCIA',0,NULL,0,0,NULL,'SE ENVIA LA RENOVACION DE LA VTV CADA VEZ QUE VENZA POR CORREO A DIRECCION DE TTE EN RAWSON','2018-03-10',8,NULL,'2018-03-11 16:47:41','2018-03-11 16:47:41',1,2,NULL,'0',NULL),(13,'Desinfeccion','Descripcion de desinfeccion',0,NULL,0,0,'Sin obs grales','SE ENVIA RENOVACIONES DE VTV CON PAGO DE PATENTES Y SEGURO A LA DIRECCION DE TTE EN KM3, EN KM4 SE MANDAN LOS CARTONES PARA EL SELLADO, LUEGO SE PAGA, SE CONTROLA Y SE ENVIA NUEVAMENTE A KM3','2018-02-28',0,NULL,'2018-03-11 21:37:04','2018-03-11 21:37:04',1,2,'Mensual','',0),(17,'Linea turismo','Linea turismoLinea turismoLinea turismo',1,'Seguros',1,1,'Linea turismoLinea turismoLinea turismoLinea turismo','Linea turismoLinea turismoLinea turismoLinea turismo','2018-02-28',56,1,'2018-03-11 22:26:53','2018-03-11 22:26:53',1,2,'Seleccione','',1);
 /*!40000 ALTER TABLE `atributos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +193,7 @@ CREATE TABLE `perfiles_atributos` (
   KEY `fk_atributos_idx` (`atributo_id`),
   CONSTRAINT `fk_atributos` FOREIGN KEY (`atributo_id`) REFERENCES `atributos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_perfiles` FOREIGN KEY (`perfil_id`) REFERENCES `perfiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +202,7 @@ CREATE TABLE `perfiles_atributos` (
 
 LOCK TABLES `perfiles_atributos` WRITE;
 /*!40000 ALTER TABLE `perfiles_atributos` DISABLE KEYS */;
-INSERT INTO `perfiles_atributos` VALUES (1,NULL,NULL,NULL,NULL,'2018-03-02 12:51:09','2018-03-02 12:51:09',NULL),(2,NULL,NULL,NULL,NULL,'2018-03-02 12:53:29','2018-03-02 12:53:29',NULL),(3,NULL,NULL,NULL,NULL,'2018-03-02 13:38:15','2018-03-02 13:38:15',NULL),(4,NULL,NULL,NULL,NULL,'2018-03-02 15:16:54','2018-03-02 15:16:54',NULL),(5,NULL,NULL,NULL,NULL,'2018-03-02 15:18:59','2018-03-02 15:18:59',NULL),(6,5,3,NULL,NULL,'2018-03-02 15:22:16','2018-03-02 15:22:16',NULL),(7,5,5,NULL,NULL,'2018-03-02 15:22:50','2018-03-02 15:22:50',NULL),(9,4,3,NULL,NULL,'2018-03-02 15:28:49','2018-03-02 15:28:49',NULL),(10,6,3,NULL,NULL,'2018-03-02 15:34:19','2018-03-02 15:34:19',NULL),(11,6,3,NULL,NULL,'2018-03-02 16:11:18','2018-03-02 16:11:18',NULL),(12,3,1,2,'1969-12-31','2018-03-02 16:15:21','2018-03-02 16:15:21',NULL),(13,3,2,2,'2018-03-16','2018-03-02 16:16:07','2018-03-02 16:16:07',NULL),(14,7,3,2,'2018-03-09','2018-03-02 17:25:49','2018-03-02 17:25:49',1),(15,3,3,1,'2018-03-09','2018-03-02 17:54:22','2018-03-02 17:54:22',1),(16,4,3,NULL,'2018-03-07','2018-03-02 18:01:07','2018-03-02 18:01:07',1),(17,3,7,NULL,'0000-00-00','2018-03-02 18:06:29','2018-03-02 18:06:29',1),(18,4,7,1,'2018-03-30','2018-03-02 18:06:41','2018-03-03 19:14:24',0),(19,21,4,1,'2018-03-07','2018-03-02 18:06:55','2018-03-03 18:52:44',1),(20,4,7,1,'2018-03-28','2018-03-03 18:30:51','2018-03-03 19:14:27',0),(21,4,7,1,'2018-04-11','2018-03-03 18:31:11','2018-03-03 18:31:11',1),(22,20,6,1,'2018-03-07','2018-03-03 18:39:26','2018-03-03 18:39:26',1);
+INSERT INTO `perfiles_atributos` VALUES (13,3,2,2,'2018-03-16','2018-03-02 16:16:07','2018-03-12 00:51:15',0),(14,7,3,2,'2018-03-09','2018-03-02 17:25:49','2018-03-12 00:51:06',0),(15,3,3,1,'2018-03-09','2018-03-02 17:54:22','2018-03-02 17:54:22',1),(16,4,3,NULL,'2018-03-07','2018-03-02 18:01:07','2018-03-02 18:01:07',1),(17,3,7,NULL,'0000-00-00','2018-03-02 18:06:29','2018-03-02 18:06:29',1),(18,4,7,1,'2018-03-30','2018-03-02 18:06:41','2018-03-03 19:14:24',0),(19,21,4,1,'2018-03-07','2018-03-02 18:06:55','2018-03-03 18:52:44',1),(20,4,7,1,'2018-03-28','2018-03-03 18:30:51','2018-03-03 19:14:27',0),(21,4,7,1,'2018-04-11','2018-03-03 18:31:11','2018-03-03 18:31:11',1),(22,20,6,1,'2018-03-07','2018-03-03 18:39:26','2018-03-03 18:39:26',1),(23,24,17,2,'2018-03-06','2018-03-12 00:50:38','2018-03-12 00:50:38',1),(24,22,12,2,'2018-02-27','2018-03-12 00:51:25','2018-03-12 00:51:25',1);
 /*!40000 ALTER TABLE `perfiles_atributos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,9 +217,11 @@ CREATE TABLE `perfiles_personas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `persona_id` int(11) NOT NULL,
   `perfil_id` int(11) NOT NULL,
-  `activo` tinyblob,
+  `activo` tinyint(1) DEFAULT NULL,
   `create_at` datetime DEFAULT NULL,
-  `update_at` varchar(45) DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `user_create_id` int(11) DEFAULT NULL,
+  `user_last_update_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -231,6 +233,37 @@ CREATE TABLE `perfiles_personas` (
 LOCK TABLES `perfiles_personas` WRITE;
 /*!40000 ALTER TABLE `perfiles_personas` DISABLE KEYS */;
 /*!40000 ALTER TABLE `perfiles_personas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `perfiles_vehiculos`
+--
+
+DROP TABLE IF EXISTS `perfiles_vehiculos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `perfiles_vehiculos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vehiculo_id` varchar(45) DEFAULT NULL,
+  `perfil_id` varchar(45) DEFAULT NULL,
+  `fecha_inicio_vigencia` date DEFAULT NULL,
+  `fecha_baja` date DEFAULT NULL,
+  `create_at` datetime DEFAULT NULL,
+  `update_at` datetime DEFAULT NULL,
+  `user_create_id` int(11) DEFAULT NULL,
+  `user_last_update_id` int(11) DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `perfiles_vehiculos`
+--
+
+LOCK TABLES `perfiles_vehiculos` WRITE;
+/*!40000 ALTER TABLE `perfiles_vehiculos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `perfiles_vehiculos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -378,4 +411,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-11 22:28:53
+-- Dump completed on 2018-03-12  2:06:01
