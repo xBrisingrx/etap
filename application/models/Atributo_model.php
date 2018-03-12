@@ -26,9 +26,9 @@ class Atributo_model extends CI_Model {
   }
 
 
-  public function insert_entry($perfil)
+  public function insert_entry($attribute)
   {
-  	return $this->db->insert('atributos', $perfil);
+  	return $this->db->insert('atributos', $attribute);
   }
 
   public function update_entry($id, $perfil)

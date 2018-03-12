@@ -41,22 +41,26 @@ class Atributos extends CI_Controller {
 			'tipo' => $this->input->post('tipo'),
 			'nombre' => $this->input->post('nombre'),
 			'descripcion' => $this->input->post('descripcion'),
-			'dato_obligatorio' => $this->input->post('dato_obligatorio'),
-			'tiene_vencimiento' => $this->input->post('tiene_vencimiento'),
+			'categoria'  => $this->input->post('categoria'),
+			'dato_obligatorio' => ($this->input->post('dato_obligatorio')) ? true : false,
+			'tiene_vencimiento' => ($this->input->post('tiene_vencimiento')) ? true : false,
+			'permite_modificar_proximo_vencimiento' => ($this->input->post('permite_edit_prox_vencimiento')) ? true : false,
 			'tipo_vencimiento' => $this->input->post('tipo_vencimiento'),
-			'periodo_vencimiento' => $this->input->post('dato_obligatorio'),
-			'permite_pdf' => $this->input->post('permite_pdf'),
+			'periodo_vencimiento' => $this->input->post('periodo_vencimiento'),
+			'permite_pdf' => ($this->input->post('permite_pdf')) ? true : false,
 			'observaciones' => $this->input->post('observaciones'),
 			'metodologia_renovacion' => $this->input->post('metodologia_renovacion'),
 			'fecha_inicio_vigencia' => $this->input->post('fecha_inicio_vigencia'),
 			'importe' => $this->input->post('importe'),
+			'presenta_resumen_mensual' => ($this->input->post('presenta_resumen_mensual')) ? true : false,
 			'create_at' => date('Y-m-d H:i:s'),
 			'update_at' => date('Y-m-d H:i:s'),
 			'activo' => true
 		);
 
 		if ($this->Atributo_model->insert_entry($atributo)) {
-			echo 'ok';
+			$json = json_encode($atributo);
+			echo '<script> console.log('.$json.') </script>';
 		} else {
 			echo 'error';
 		}
@@ -107,12 +111,12 @@ class Atributos extends CI_Controller {
 			$row[] = $a->nombre;
 			$row[] = $a->descripcion;
 			$row[] = ($a->dato_obligatorio) ? 'Si' : 'No';
-			$row[] = $a->categoria_id;
+			$row[] = $a->categoria;
 			$row[] = ($a->tiene_vencimiento) ? 'Si' : 'No';
-			$row[] = 'tipo vencimiento';
-			$row[] = 'periodo vencimiento';
-			$row[] = 'permite mod pro venc';
-			$row[] = 'permite anexo';
+			$row[] = $a->tipo_vencimiento;
+			$row[] = $a->periodo_vencimiento;
+			$row[] = ($a->permite_modificar_proximo_vencimiento) ? 'Si' : 'No';
+			$row[] = $a->permite_pdf;
 			$row[] = $a->observaciones;
 			$row[] = $a->metodologia_renovacion;
 			$row[] = $a->fecha_inicio_vigencia;

@@ -17,7 +17,7 @@ class Perfiles extends CI_Controller {
 		$data['nombre_perfil'] = ($tipo == 1) ? 'Personal' : 'Vechículos';
 		$data['tipo_perfil'] = $tipo;
 		$data['perfiles'] = $this->Perfil_model->get('tipo',$tipo);
-		$data['perfiles_atributos'] = $this->Perfiles_Atributos_model->get();
+		$data['perfiles_atributos'] = $this->Perfiles_Atributos_model->get('tipo',$tipo);
 		$this->load->view('includes/header',$title);
 		$this->load->view('includes/nav');
 		$this->load->view('sistema/perfiles/index',$data);

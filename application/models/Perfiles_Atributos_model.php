@@ -17,10 +17,10 @@ class Perfiles_Atributos_model extends CI_Model {
                                 perfiles.nombre as nombre_perfil, atributos.nombre as nombre_atributo, 
                                 perfiles_atributos.update_at, perfiles_atributos.fecha_inicio_vigencia, perfiles_atributos.activo,
                                 perfiles_atributos.tipo 
-                                FROM perfiles_atributos 
-                                  join perfiles on perfiles_atributos.perfil_id=perfiles.id 
-                                  join atributos on perfiles_atributos.atributo_id=atributos.id
-                                    where (perfiles_atributos.".$attr." = '".$valor."')");
+                                  FROM perfiles_atributos 
+                                    join perfiles on perfiles_atributos.perfil_id=perfiles.id 
+                                    join atributos on perfiles_atributos.atributo_id=atributos.id
+                                      where (perfiles_atributos.".$attr." = '".$valor."') and (perfiles_atributos.activo = 1)");
       if ($query->num_rows() == 1 ) {
         return $query->row();
       } else {

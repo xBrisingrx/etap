@@ -58,11 +58,12 @@
       </div>
       <div class="modal-body">
         <form id="form_atributos" class="g-brd-around g-brd-gray-light-v4 g-pa-30 g-mb-30">
+	       
 	        <!-- Tipo de perfil -->
 	        	<input type="hidden" id="tipo" name="tipo" value="<?php echo $tipo_atributo;?>">
 
 	        <!-- ID perfil -->
-	        	<input type="hidden" name="id" value="">
+	        	<input type="hidden" name="atributo_id" id="atributo_id" value="">
 
 				  <!-- Text Input -->
 				  <div class="form-group g-mb-20">
@@ -115,20 +116,19 @@
 					    </div>
 					  </label>
 				  </div>
-
 				  <!-- End Checkbox dato tiene vencimiento -->
 
 				  <!-- Select tipo vencimiento -->
-				  <div id="select_tiene_vencimiento" class="form-group g-mb-20" style="display: none">
+				  <div id="select_tipo_vencimiento" class="form-group g-mb-20" style="display: none">
 				    <label class="mr-sm-3 mb-3 mb-lg-0" for="tipo_vencimiento">Tipo de vencimiento(*)</label>
 				    <select class="custom-select mb-3" id="tipo_vencimiento">
 				      <option value="0">Seleccione tipo vencimiento</option>
-				      <option value="1">Semanal</option>
-				      <option value="2">Quincenal</option>
-				      <option value="3">Mensual</option>
-				      <option value="4">Semestral</option>
-				      <option value="5">Anual</option>
-				      <option value="6">Otro</option>
+				      <option value="7">Semanal</option>
+				      <option value="15">Quincenal</option>
+				      <option value="30">Mensual</option>
+				      <option value="180">Semestral</option>
+				      <option value="365">Anual</option>
+				      <option value="1">Otro</option>
 				    </select>
 				  </div>
 				  <!-- End select tipo vencimiento -->
@@ -140,6 +140,18 @@
 				    <small class="form-control-feedback"></small>
 				  </div>
 				  <!-- End Numb Input periodo vencimiento -->
+
+				  <!-- Checkbox permite modificar proximo vencimiento  -->
+				  <div id="check_permite_edit_prox_venc" class="form-group g-mb-20" style="display: none">
+					  <label class="form-check-inline u-check g-pl-25">
+					  	Permite modificar proximo vencimiento
+					    <input id="permite_edit_prox_vencimiento" name="permite_edit_prox_vencimiento" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
+					    <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
+					      <i class="fa" data-check-icon=""></i>
+					    </div>
+					  </label>
+				  </div>
+				  <!-- End Checkbox permite modificar proximo vencimiento -->
 
 				  <!-- Checkbox dato permite anexar pdf  -->
 				  <div class="form-group g-mb-20">
@@ -155,8 +167,8 @@
 
 				  <!-- Textarea Expandable observaciones grales -->
 				  <div class="form-group g-mb-20">
-				    <label class="g-mb-10" for="obsevaciones">Observaciones generales</label>
-				    <textarea id="obsevaciones" name="obsevaciones" class="form-control form-control-md u-textarea-expandable rounded-0" rows="3" placeholder="Ingrese descripción del perfil" required></textarea>
+				    <label class="g-mb-10" for="observaciones">Observaciones generales</label>
+				    <textarea id="observaciones" name="observaciones" class="form-control form-control-md u-textarea-expandable rounded-0" rows="3" placeholder="Ingrese descripción del perfil" required></textarea>
 				  </div>
 				  <!-- End Textarea Expandable observaciones grales -->
 
@@ -186,6 +198,18 @@
 				    <small class="form-control-feedback"></small>
 				  </div>
 				  <!-- End Numb Input importe -->
+
+				  <!-- Checkbox dato permite anexar pdf  -->
+				  <div class="form-group g-mb-20">
+					  <label class="form-check-inline u-check g-pl-25">
+					  	Presenta en resumen mensual
+					    <input id="presenta_resumen_mensual" name="presenta_resumen_mensual" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
+					    <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
+					      <i class="fa" data-check-icon=""></i>
+					    </div>
+					  </label>
+				  </div>
+				  <!-- End Checkbox dato permite anexar pdf -->
 
 
 				<button id="btnSave" type="submit" class="btn btn-primary" ></button>
@@ -231,14 +255,16 @@
 
 	$('#tiene_vencimiento').on('click', function(){
 		if ($(this).is(':checked')) {
-			$('#select_tiene_vencimiento').show();
+			$('#select_tipo_vencimiento').show();
+			$('#check_permite_edit_prox_venc').show();
 		} else {
-			$('#select_tiene_vencimiento').hide();
+			$('#select_tipo_vencimiento').hide();
+			$('#check_permite_edit_prox_venc').hide();
 		}
 	});
 
 	$('#tipo_vencimiento').on('change', function(){
-		if ($(this).val() == '6') {
+		if ($(this).val() == '1') {
 			$('#input_periodo_vencimiento').show();
 		} else {
 			$('#input_periodo_vencimiento').hide();
@@ -261,7 +287,10 @@
 	function create_attribute()
 	{
 		save_method = 'create';
-		$('#form_atributos')[0].reset();
+		$('#form_atributos')[0].reset()
+		$('#select_tipo_vencimiento').hide()
+		$('#input_periodo_vencimiento').hide()
+		$('#check_permite_edit_prox_venc').hide()
 		$('#modal_form_atributo .modal-title').text('Alta de atributo');
 		$('#modal_form_atributo #btnSave').text('Grabar atributo');
 		$('.form-control').removeClass('error');
@@ -272,7 +301,12 @@
 	function edit_attribute(id)
 	{
 		save_method = 'update';
-		$('#form_atributos')[0].reset();
+		$('#form_atributos')[0].reset()
+		$('#select_tipo_vencimiento').hide()
+		$('#input_periodo_vencimiento').hide()
+		$('#check_permite_edit_prox_venc').hide()
+		$('.form-control').removeClass('error')
+		$('.error').empty()	
 
 		$.ajax({
 			url: "<?php echo base_url('Atributos/edit/');?>" + id,
@@ -283,10 +317,7 @@
 					$('[name=id]').val(data.id);
 					$('[name=nombre]').val(data.nombre);
 					$('[name=descripcion]').val(data.descripcion);
-					$('[name=fecha_inicio_vigencia]').val(data.fecha_inicio_vigencia);
-
-					$('.form-control').removeClass('error');
-					$('.error').empty();					
+					$('[name=fecha_inicio_vigencia]').val(data.fecha_inicio_vigencia);				
 
 					$('#modal_form_atributo .modal-title').text('Modificar perfil');
 					$('#modal_form_atributo #btnSave').text('Actualizar perfil');
@@ -307,7 +338,7 @@
 		$.each(componentes, function(index,componente){
 			if ($(componente).prop("type")  == "checkbox") {
 				rta.push($(componente).is(':checked'));
-			}  else if (componente.id == "tipo_vencimiento") {
+			}  else if ($(componente).prop('type') == "") {
 				rta.push('selected');
 			} else {
 				rta.push($(componente).val());
@@ -324,34 +355,34 @@
 
      url = "<?php echo base_url();?>Atributos/" + save_method;
     // ajax adding data to database
-		 console.log(extraerDatos($('#form_atributos')));  
+		
+    $.ajax({
+    	url: url,
+    	type: "POST",
+    	data: agrupar_datos(),
+    	success: function(msg)
+    	{
+    		if (msg === 'ok') {
+    			table_atributos.ajax.reload(null,false);
+    			$('#modal_form_atributo').modal('hide');
+    		} else {
+    			alert('error al guardar datos '+ msg);
+    		}
+    		$('#btnSave').attr('disabled', false);
+    	},
+    	error: function(jqXHR, textStatus, errorThrown){
+    		alert('Error al guardar datos metodo: ' + save_method);
+    		$('#btnSave').attr('disabled', false);
+    	}
 
-
-    // $.ajax({
-    // 	url: url,
-    // 	type: "POST",
-    // 	data: $('#form_atributos').serialize(),
-    // 	success: function(msg)
-    // 	{
-    // 		if (msg === 'ok') {
-    // 			table_atributos.ajax.reload(null,false);
-    // 			$('#modal_form_atributo').modal('hide');
-    // 		} else {
-    // 			alert('error al guardar datos '+ msg);
-    // 		}
-    // 		$('#btnSave').attr('disabled', false);
-    // 	},
-    // 	error: function(jqXHR, textStatus, errorThrown){
-    // 		alert('Error al guardar datos metodo: ' + save_method);
-    // 		$('#btnSave').attr('disabled', false);
-    // 	}
-
-    // });
+    });
 	}
 
 	$('#form_atributos').submit(function(e){
 		e.preventDefault();	
 		if (form_atributos.valid()) { save(); }
+		console.log(agrupar_datos())
+
 	});
 
 // Llamo al modal de advertencia para eliminar el perfil
@@ -395,6 +426,30 @@
 				alert('Fallo el eliminar atributo');
 			}
 		});
+	}
+
+	function agrupar_datos()
+	{
+		datos = {
+			'id': $('#form_atributos #atributo_id').val(),
+			'tipo': $('#form_atributos #tipo').val(),
+			'nombre': $('#form_atributos #nombre').val(),
+			'descripcion': $('#form_atributos #descripcion').val(),
+			'categoria': $('#form_atributos #categoria option:selected').text(),
+			'dato_obligatorio': $('#form_atributos #dato_obligatorio').is(':checked'),
+			'tiene_vencimiento': $('#form_atributos #tiene_vencimiento').is(':checked'),
+			'tipo_vencimiento': $('#form_atributos #tipo_vencimiento option:selected').text(),
+			'periodo_vencimiento': $('#form_atributos #periodo_vencimiento').val(),
+			'permite_pdf': $('#form_atributos #permite_pdf').is(':checked'),
+			'observaciones': $('#form_atributos #observaciones').val(),
+			'metodologia_renovacion': $('#form_atributos #metodologia_renovacion').val(),
+			'fecha_inicio_vigencia': $('#form_atributos #fecha_inicio_vigencia').val(),
+			'importe': $('#form_atributos #importe').val(),
+			'permite_edit_prox_vencimiento': $('#form_atributos #permite_edit_prox_vencimiento').is(':checked'),
+			'presenta_resumen_mensual': $('#form_atributos #presenta_resumen_mensual').is(':checked'),
+		}
+
+		return datos
 	}
 
 

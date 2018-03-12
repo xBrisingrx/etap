@@ -13,7 +13,7 @@ class Perfil_model extends CI_Model {
   {
   	if($attr != null and $valor != null)
   	{
-  		$query = $this->db->get_where('perfiles', array($attr => $valor));
+  		$query = $this->db->get_where('perfiles', array($attr => $valor, 'activo' => true));
       if ($query->num_rows() == 1 ) {
         return $query->row();
       } else {

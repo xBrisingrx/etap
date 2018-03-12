@@ -112,7 +112,7 @@
 				  </div>
 				  <!-- End Select Single Date -->
 				<button id="btnSave" type="submit" class="btn btn-primary"></button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn u-btn-red" data-dismiss="modal">Cerrar</button>
         </form>
       </div>
     </div>
@@ -167,7 +167,7 @@
 				  </div>
 				  <!-- End Select Single Date -->
 					<button id="btnSaveAssign" type="submit" class="btn btn-primary">Asignar atributo</button>
-        	<button type="button" class="btn btn-red" data-dismiss="modal">Cerrar</button>
+        	<button type="button" class="btn u-btn-red" data-dismiss="modal">Cerrar</button>
       	</form>
       </div>
     </div>
@@ -233,7 +233,7 @@
 	var table_perfiles_atributos;
 
 	$.validator.addMethod("alfanumOespacio", function(value, element) {
-	        return /^[ a-záéíóúüñ]*$/i.test(value);
+	        return /^[ a-záéíóúüñ ,]*$/i.test(value);
 	    }, "Ingrese sólo letras.");
 
 	var form_perfiles = $('#form_perfiles').validate({
