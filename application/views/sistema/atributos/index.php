@@ -84,7 +84,7 @@
 				  <div class="form-group g-mb-20">
 				  	<label class="form-check-inline u-check g-pl-25">
 					  	Dato obligatorio
-					    <input id="dato_obligatorio" name="dato_obligatorio" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="0">
+					    <input id="dato_obligatorio" name="dato_obligatorio" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
 					    <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
 					      <i class="fa" data-check-icon=""></i>
 					    </div>
@@ -314,10 +314,35 @@
 			dataType: "JSON",
 			success: function(data)
 				{
-					$('[name=id]').val(data.id);
-					$('[name=nombre]').val(data.nombre);
-					$('[name=descripcion]').val(data.descripcion);
-					$('[name=fecha_inicio_vigencia]').val(data.fecha_inicio_vigencia);				
+					console.log(data.dato_obligatorio)
+
+					$('[name=id]').val(data.id)
+					$('[name=nombre]').val(data.nombre)
+					$('[name=descripcion]').val(data.descripcion)
+					$('[id=dato_obligatorio]').prop('checked', data.dato_obligatorio == 1)
+					$('#categoria option').prop('selected', false)
+					$('#categoria option').filter(function(){
+						return this.text == data.categoria
+					}).attr('selected', true)
+					$('#tiene_vencimiento').prop('checked', data.tiene_vencimiento == 1)
+					if (data.tiene_vencimiento == 1) {
+						$('#select_tipo_vencimiento').show()
+							$('#tipo_vencimiento option').prop('selected', false)
+							$('#tipo_vencimiento option').filter(function(){
+								return this.text == data.tipo_vencimiento
+							}).attr('selected', true)
+							$('#permite_edit_prox_vencimiento').prop('checked', data.permite_modificar_proximo_vencimiento == 1)
+					}
+					if (data.tipo_vencimiento == 'Otro') {
+						$('#input_periodo_vencimiento').show()
+						$('#periodo_vencimiento').val(data.periodo_vencimiento)
+					}
+					$('#permite_pdf').prop('checked', data.permite_pdf == 1)
+					$('#observaciones').text(data.observaciones)
+					$('#metodologia_renovacion').text(data.metodologia_renovacion)
+					$('[name=fecha_inicio_vigencia]').val(data.fecha_inicio_vigencia)
+					$('#importe').val(data.importe)
+					$('#presenta_resumen_mensual').prop('checked', data.presenta_resumen_mensual == 1)
 
 					$('#modal_form_atributo .modal-title').text('Modificar perfil');
 					$('#modal_form_atributo #btnSave').text('Actualizar perfil');
@@ -394,10 +419,10 @@
 			dataType: "JSON",
 			success: function(resp)
 			{
-				$('#modal_delete_attribute #id_attribute_delete').val(resp.id);
-				$('#modal_delete_attribute #name_attribute_delete').append(resp.nombre);
-				$('#modal_delete_attribute #description_attribute_delete').append(resp.descripcion);
-				$('#modal_delete_attribute').modal('show');
+				$('#modal_delete_attribute #id_attribute_delete').val(resp.id)
+				$('#modal_delete_attribute #name_attribute_delete').append(resp.nombre)
+				$('#modal_delete_attribute #description_attribute_delete').append(resp.descripcion)
+				$('#modal_delete_attribute').modal('show')
 			},
 			error: function()
 			{
