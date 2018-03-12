@@ -57,6 +57,8 @@
         </button>
       </div>
       <div class="modal-body">
+
+
         <form id="form_atributos" class="g-brd-around g-brd-gray-light-v4 g-pa-30 g-mb-30">
 	       
 	        <!-- Tipo de perfil -->
@@ -66,22 +68,26 @@
 	        	<input type="hidden" name="atributo_id" id="atributo_id" value="">
 
 				  <!-- Text Input -->
-				  <div class="form-group g-mb-20">
-				    <label class="g-mb-10" for="inputGroup1_1">Nombre del atributo(*)</label>
-				    <input id="nombre" name="nombre" class="form-control form-control-md rounded-0" placeholder="Ingrese nombre de perfil" type="text" required>
-				    <small class="form-control-feedback"></small>
+				  <div class="form-group row g-mb-5">
+				    <label class="col-sm-2 col-form-label g-mb-5" for="nombre">Nombre del atributo(*)</label>
+				    <div class="col-sm-9">
+					    <input id="nombre" name="nombre" class="form-control form-control-md rounded-0" placeholder="Ingrese nombre de perfil" type="text" required>
+					    <small class="form-control-feedback"></small>
+				    </div>
 				  </div>
 				  <!-- End Text Input -->
 
 				  <!-- Textarea Expandable -->
-				  <div class="form-group g-mb-20">
-				    <label class="g-mb-10" for="inputGroup2_2">Descripción(*)</label>
-				    <textarea id="descripcion" name="descripcion" class="form-control form-control-md u-textarea-expandable rounded-0" rows="3" placeholder="Ingrese descripción del perfil" required></textarea>
+				  <div class="form-group row g-mb-5">
+				    <label class="col-sm-2 col-form-label g-mb-5" for="inputGroup2_2">Descripción(*)</label>
+				    <div class="col-sm-9">
+							<textarea id="descripcion" name="descripcion" class="form-control form-control-md u-textarea-expandable rounded-0" rows="3" placeholder="Ingrese descripción del perfil" required></textarea>
+				    </div>
 				  </div>
 				  <!-- End Textarea Expandable -->
 
 				  <!-- Checkbox dato obligatorio  -->
-				  <div class="form-group g-mb-20">
+				  <div class="form-group g-mb-5">
 				  	<label class="form-check-inline u-check g-pl-25">
 					  	Dato obligatorio
 					    <input id="dato_obligatorio" name="dato_obligatorio" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
@@ -93,10 +99,10 @@
 				  <!-- End Checkbox dato obligatorio -->
 
 				  <!-- Select categoria -->
-				  <div class="form-group g-mb-20">
-				    <label class="mr-sm-3 mb-3 mb-lg-0" for="categoria">Categoria(*)</label>
-				    <select class="custom-select mb-3" id="categoria">
-				      <option value="0">Seleccione categoria</option>
+				  <div class="form-group row g-mb-5">
+				    <label class="mr-sm-3 mb-3 mb-lg-0 col-sm-2" for="categoria">Categoria(*)</label>
+				    <select class="custom-select mb-3 col-sm-4" id="categoria" required>
+				      <option value="0" disabled selected>Seleccione categoria</option>
 				      <option value="1">General</option>
 				      <option value="2">Liquidación de haberes</option>
 				      <option value="3">Otros</option>
@@ -107,7 +113,7 @@
 				  <!-- End select categoria -->
 
 				  <!-- Checkbox dato tiene vencimiento  -->
-				  <div class="form-group g-mb-20">
+				  <div class="form-group g-mb-5">
 					  <label class="form-check-inline u-check g-pl-25">
 					  	Tiene vencimiento
 					    <input id="tiene_vencimiento" name="tiene_vencimiento" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
@@ -119,10 +125,10 @@
 				  <!-- End Checkbox dato tiene vencimiento -->
 
 				  <!-- Select tipo vencimiento -->
-				  <div id="select_tipo_vencimiento" class="form-group g-mb-20" style="display: none">
-				    <label class="mr-sm-3 mb-3 mb-lg-0" for="tipo_vencimiento">Tipo de vencimiento(*)</label>
-				    <select class="custom-select mb-3" id="tipo_vencimiento">
-				      <option value="0">Seleccione tipo vencimiento</option>
+				  <div id="select_tipo_vencimiento" class="form-group row g-mb-5" style="display: none">
+				    <label class="mr-sm-3 mb-3 mb-lg-0 col-sm-2" for="tipo_vencimiento">Tipo de vencimiento(*)</label>
+				    <select class="custom-select mb-3 col-sm-4" id="tipo_vencimiento">
+				      <option value="0" disabled selected>Seleccione tipo vencimiento</option>
 				      <option value="7">Semanal</option>
 				      <option value="15">Quincenal</option>
 				      <option value="30">Mensual</option>
@@ -134,15 +140,17 @@
 				  <!-- End select tipo vencimiento -->
 
 				  <!-- Numb Input periodo vencimiento -->
-				  <div id="input_periodo_vencimiento" class="form-group g-mb-20" style="display: none">
-				    <label class="g-mb-10" for="periodo_vencimiento">Período vencimiento (días) (*)</label>
-				    <input id="periodo_vencimiento" name="periodo_vencimiento" class="form-control form-control-md rounded-0" type="number" required>
-				    <small class="form-control-feedback"></small>
+				  <div id="input_periodo_vencimiento" class="form-group row g-mb-5" style="display: none">
+				    <label class="g-mb-10 col-sm-2" for="periodo_vencimiento">Período vencimiento (días) (*)</label>
+				    <div class="col-sm-6">
+					    <input id="periodo_vencimiento" name="periodo_vencimiento" class="form-control rounded-0" type="number" required>
+					    <small class="form-control-feedback"></small>
+				    </div>
 				  </div>
 				  <!-- End Numb Input periodo vencimiento -->
 
 				  <!-- Checkbox permite modificar proximo vencimiento  -->
-				  <div id="check_permite_edit_prox_venc" class="form-group g-mb-20" style="display: none">
+				  <div id="check_permite_edit_prox_venc" class="form-group g-mb-10" style="display: none">
 					  <label class="form-check-inline u-check g-pl-25">
 					  	Permite modificar proximo vencimiento
 					    <input id="permite_edit_prox_vencimiento" name="permite_edit_prox_vencimiento" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
@@ -154,7 +162,7 @@
 				  <!-- End Checkbox permite modificar proximo vencimiento -->
 
 				  <!-- Checkbox dato permite anexar pdf  -->
-				  <div class="form-group g-mb-20">
+				  <div class="form-group g-mb-10">
 					  <label class="form-check-inline u-check g-pl-25">
 					  	Permite anexar PDF
 					    <input id="permite_pdf" name="permite_pdf" class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" value="">
@@ -166,21 +174,25 @@
 				  <!-- End Checkbox dato permite anexar pdf -->
 
 				  <!-- Textarea Expandable observaciones grales -->
-				  <div class="form-group g-mb-20">
-				    <label class="g-mb-10" for="observaciones">Observaciones generales</label>
-				    <textarea id="observaciones" name="observaciones" class="form-control form-control-md u-textarea-expandable rounded-0" rows="3" placeholder="Ingrese descripción del perfil" required></textarea>
+				  <div class="form-group row g-mb-10">
+				    <label class="g-mb-10 col-sm-2" for="observaciones">Observaciones generales</label>
+				    <div class="col-sm-9">
+				    	<textarea id="observaciones" name="observaciones" class="form-control form-control-md u-textarea-expandable rounded-0" rows="3" placeholder="Ingrese descripción del perfil"></textarea>
+				    </div>
 				  </div>
 				  <!-- End Textarea Expandable observaciones grales -->
 
 				  <!-- Textarea Expandable metodologia renovacion -->
-				  <div class="form-group g-mb-20">
-				    <label class="g-mb-10" for="metodologia_renovacion">Metodología de renovación</label>
-				    <textarea id="metodologia_renovacion" name="metodologia_renovacion" class="form-control form-control-md u-textarea-expandable rounded-0" rows="3" placeholder="Ingrese descripción del perfil" required></textarea>
+				  <div class="form-group row g-mb-10">
+				    <label class="g-mb-10 col-sm-2" for="metodologia_renovacion">Metodología de renovación</label>
+				   <div class="col-sm-9">
+				   	 <textarea id="metodologia_renovacion" name="metodologia_renovacion" class="form-control form-control-md u-textarea-expandable rounded-0" rows="3" placeholder="Ingrese descripción del perfil"></textarea>
+				   </div>
 				  </div>
 				  <!-- End Textarea Expandable metodologia renovacion -->
 
 				  <!-- Select Single Date -->
-				  <div class="form-group g-mb-30">
+				  <div class="form-group g-mb-10">
 				    <label class="g-mb-10">Fecha inicio vigencia(*)</label>
 				    <div class="input-group g-brd-primary--focus">
 				      <input id="fecha_inicio_vigencia" name="fecha_inicio_vigencia" class="form-control form-control-md  rounded-0" type="date" required>
@@ -192,10 +204,12 @@
 				  <!-- End Select Single Date -->
 
 				  <!-- Numb Input importe -->
-				  <div class="form-group g-mb-20">
-				    <label class="g-mb-10" for="importe">Importe $(*)</label>
-				    <input id="importe" name="importe" importeclass="form-control form-control-md rounded-0" type="number" required>
-				    <small class="form-control-feedback"></small>
+				  <div class="form-group row g-mb-5">
+				    <label class="g-mb-10 col-sm-2" for="importe">Importe $(*)</label>
+				    <div class="col-sm-6">
+							<input id="importe" name="importe" class="form-control rounded-0" type="number" required>
+					    <small class="form-control-feedback"></small>
+				    </div>
 				  </div>
 				  <!-- End Numb Input importe -->
 
@@ -213,7 +227,7 @@
 
 
 				<button id="btnSave" type="submit" class="btn btn-primary" ></button>
-        <button type="button" data-dismiss="modal" class="btn btn-md u-btn-red g-mr-10"> Cerrar </button>
+        <button type="button" data-dismiss="modal" class="btn u-btn-red"> Cerrar </button>
         </form>
       </div>
     </div>
@@ -280,7 +294,17 @@
 															rules: {
 																'nombre': { alfanumOespacio: true,
 																 						minlength: 3 },
-																'descripcion': { minlength: 10 }
+																'descripcion': { minlength: 10 },
+																'tipo_vencimiento': {
+																	required: function(){
+																		return $('#tiene_vencimiento').is(':checked')
+																	}
+																},
+																'periodo_vencimiento': {
+																	required: function(){
+																		return ( $('#tipo_vencimiento').val() == 1 )
+																	}
+																}
 															}
 														});
 
@@ -316,7 +340,7 @@
 				{
 					console.log(data.dato_obligatorio)
 
-					$('[name=id]').val(data.id)
+					$('#atributo_id').val(data.id)
 					$('[name=nombre]').val(data.nombre)
 					$('[name=descripcion]').val(data.descripcion)
 					$('[id=dato_obligatorio]').prop('checked', data.dato_obligatorio == 1)

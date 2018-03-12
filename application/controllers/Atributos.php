@@ -75,12 +75,23 @@ class Atributos extends CI_Controller {
 	public function update()
 	{
 		$id = $this->input->post('id');
-		$perfil = array(
+		$perfil = array(	
 			'tipo' => $this->input->post('tipo'),
 			'nombre' => $this->input->post('nombre'),
 			'descripcion' => $this->input->post('descripcion'),
+			'categoria'  => $this->input->post('categoria'),
+			'dato_obligatorio' => ($this->input->post('dato_obligatorio')) ? true : false,
+			'tiene_vencimiento' => ($this->input->post('tiene_vencimiento')) ? true : false,
+			'permite_modificar_proximo_vencimiento' => ($this->input->post('permite_edit_prox_vencimiento')) ? true : false,
+			'tipo_vencimiento' => $this->input->post('tipo_vencimiento'),
+			'periodo_vencimiento' => $this->input->post('periodo_vencimiento'),
+			'permite_pdf' => ($this->input->post('permite_pdf')) ? true : false,
+			'observaciones' => $this->input->post('observaciones'),
+			'metodologia_renovacion' => $this->input->post('metodologia_renovacion'),
 			'fecha_inicio_vigencia' => $this->input->post('fecha_inicio_vigencia'),
-			'update_at' => date('Y-m-d H:i:s')
+			'importe' => $this->input->post('importe'),
+			'presenta_resumen_mensual' => ($this->input->post('presenta_resumen_mensual')) ? true : false,
+			'update_at' => date('Y-m-d H:i:s'),
 		);
 		if ($this->Atributo_model->update_entry($id, $perfil)) {
 			echo 'ok';
