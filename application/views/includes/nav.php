@@ -14,7 +14,7 @@
             <!-- End Responsive Toggle Button -->
             <!-- Logo -->
             <a href="<?php echo base_url();?>" class="navbar-brand">
-              <img src="../../../assets/img/logo/logo-1.png" alt="Image Description">
+              <!-- <img src="../../../assets/img/logo/logo-1.png" alt="Image Description"> -->
             </a>
             <!-- End Logo -->
 

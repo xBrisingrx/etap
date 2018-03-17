@@ -9,6 +9,7 @@ class Personas extends CI_Controller {
 	  $this->load->model('Empresa_model');
 	  $this->load->model('Persona_model');
 	  date_default_timezone_set('America/Argentina/Buenos_Aires'); 
+	  $this->load->library('upload');
 	}
 
 	public function index()
@@ -235,22 +236,55 @@ class Personas extends CI_Controller {
 
 	function upload_pdf()
 	{
-		if (0 < $_FILES['file']['error']) {
+		if ( 0 < $_FILES['file']['error']) {
 			echo 'Error:' . $_FILES['file']['error']. '<br>';
 		} else {
-			move_uploaded_file($_FILES['file']['tmp_name'], 'assets/upload/'.$_FILES['file']['tmp_name'].'.pdf');
+			move_uploaded_file($_FILES['file']['tmp_name'], 'assets/uploads/'.$_POST['nombre'].'.pdf');
+			echo 'success';
 		}
 	}
 
-	public function dni_unico() 
+	function subir_pdf()
 	{
-		$dni = $this->input->post('dni');
-		$persona = $this->db->get_where('personas', array('dni' => $dni))->num_rows();
+		$config['upload_path']  	= '/srv/http/etap/assets/uploads/';
+		$config['allowed_types']	= 'pdf';
+		$config['max_size']     	= 10024;
+		$config['overwrite']			= true;
+		$config['file_name']			= $this->input->post('nombre');
 
-		if ($persona == 0) {
-			echo 'FALSE'; 
+		$this->upload->initialize($config);
+		if ( ! $this->upload->do_upload('file'))
+		{
+		        // $error = array('error' => $this->upload->display_errors());
+
+		        // $this->load->view('upload_form', $error);
+			echo $this->upload->display_errors();
+		}
+		else
+		{
+		        // $data = array('upload_data' => $this->upload->data());
+
+		        // $this->load->view('upload_success', $data);
+			echo 'success';
+		}	
+	}
+
+
+	public function dni_repetido() 
+	{
+		// Verificamos que el dni no se repita
+		$dni = $_POST['dni'];
+		$this->db->where('dni', $dni)
+							->from('personas');
+
+		$cantidad = $this->db->count_all_results();
+
+		if ($cantidad > 0) {
+			// El dni existe
+			echo 'false';
 		} else {
-			echo 'TRUE';
+			// El dni no existe
+			echo 'true';
 		}
 	}
 
