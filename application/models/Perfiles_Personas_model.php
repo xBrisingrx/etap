@@ -2,7 +2,6 @@
 
 class Perfiles_Personas_model extends CI_Model {
   
-// Tipo perfil: 1 para personal 2 para vehiculos
   public $table = 'perfiles_personas';
 
   public function __construct()
@@ -15,7 +14,14 @@ class Perfiles_Personas_model extends CI_Model {
   {
   	if($attr != null and $valor != null)
   	{
-  		return $this->db->get_where($this->table, array($attr => $valor, 'activo' => true))->result();
+  		$this->db->select('perfiles_personas.id, personas.nombre as nombre_persona, personas.apellido as apellido_persona,
+                         perfiles.nombre as nombre_perfil')
+                  ->from('perfiles_personas')
+                    ->join('personas', 'personas.id = perfiles_personas.persona_id')
+                        ->join('perfiles', 'perfiles.id = perfiles_personas.perfil_id')
+                          ->where('perfiles_personas.'.$attr, $valor)
+                          ->where('perfiles_personas.activo', TRUE);
+        return $this->db->get()->row();
   	} else 
     	{
         $this->db->select('personas.nombre as nombre_persona, personas.apellido as apellido_persona, 
@@ -25,7 +31,7 @@ class Perfiles_Personas_model extends CI_Model {
                       ->from('perfiles_personas')
                         ->join('personas', 'personas.id = perfiles_personas.persona_id')
                         ->join('perfiles', 'perfiles.id = perfiles_personas.perfil_id')
-                          ->where('perfiles_personas.activo' = true);
+                          ->where('perfiles_personas.activo', TRUE);
         return $this->db->get()->result();
     	}
   }

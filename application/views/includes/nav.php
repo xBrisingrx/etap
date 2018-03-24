@@ -39,7 +39,7 @@
                       <a href="<?php echo base_url('Atributos/index/1');?>">Admin de atributos</a>
                     </li>
                     <li>
-                      <a href="<?php echo base_url('');?>">Dependencia de atributos</a>
+                      <a href="<?php echo base_url('Atributos/dependencias_atributos/1');?>">Dependencia de atributos</a>
                     </li>
                   </ul>
                   <!-- End Submenu personas -->
@@ -61,7 +61,7 @@
                       <a href="<?php echo base_url('Atributos/index/2');?>">Admin de atributos</a>
                     </li>
                     <li>
-                      <a href="#!">Dependencia de atributos</a>
+                      <a href="<?php echo base_url('Atributos/dependencias_atributos/2');?>">Dependencia de atributos</a>
                     </li>
                   </ul>
                   <!-- End Submenu Vehiculos -->

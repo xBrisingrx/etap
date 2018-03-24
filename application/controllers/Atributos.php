@@ -154,4 +154,14 @@ class Atributos extends CI_Controller {
 		echo( json_encode($attributes) );
 	}
 
+
+	function dependencias_atributos($tipo = null)
+	{
+		$title['title'] = ' ';
+		$this->load->view('includes/header',$title);
+		$this->load->view('includes/nav');
+		$this->load->view('sistema/atributos/dependencias_atributos_view');
+		$this->load->view('includes/footer');
+	}
+
 }

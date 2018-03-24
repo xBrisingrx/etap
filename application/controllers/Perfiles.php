@@ -7,6 +7,8 @@ class Perfiles extends CI_Controller {
 	{
 	  parent::__construct();
 	  $this->load->model('Perfil_model');
+	  $this->load->model('Persona_model');
+	  $this->load->model('Vehiculo_model');
 	  $this->load->model('Perfiles_Atributos_model');
 	  $this->load->model('Perfiles_Personas_model');
 	  $this->load->model('Perfiles_Vehiculos_model');
@@ -201,19 +203,19 @@ class Perfiles extends CI_Controller {
 	public function asignacion_perfiles($tipo_perfil)
 	{
 		$title['title'] = 'Asignacion de perfiles';
-		$data['nombre_perfil'] = ($tipo_perfil == 1) ? 'Personal' : 'Vechículos';
-		$data['tipo_perfil'] = $tipo_perfil;
-		$data['perfiles'] = $this->Perfil_model->get('tipo',$tipo_perfil);
+		$data['nombre_tipo_perfil'] = ($tipo_perfil == 1) ? 'Personal' : 'Vechículos';
 
+		$data['perfiles'] = $this->Perfil_model->get('tipo',$tipo_perfil);
+		$data['tipo_perfil'] = $tipo_perfil;
 		// A quien asigno el perfil y encabezado de la tabla
 		if ($tipo_perfil == 1) {
 			// Personas
-			$data['asigno'] = $this->Perfiles_Personas_model->get();
+			$data['asigno'] = $this->Persona_model->get();
 			$data['columnas_tabla'] = array('Apellido', 'Nombre', 'DNI', 'CUIL', 'Perfil', 
 																			'Fecha inicio vigencia', 'Fecha baja', 'Acciones');
 		} else {
 			// Vehiculos
-			$data['asigno'] = $this->Perfiles_Vehiculos_model->get();
+			$data['asigno'] = $this->Vehiculo_model->get();
 			$data['columnas_tabla'] = array('Interno', 'Dominio', 'Marca', 'Año', 'Modelo', 'Perfil', 
 																			'Fecha inicio vigencia', 'Fecha baja', 'Acciones');
 		}
@@ -237,7 +239,7 @@ class Perfiles extends CI_Controller {
 				$row[] = $p->nombre_perfil;
 				$row[] = date('d-m-Y', strtotime($p->fecha_inicio_vigencia));
 				$row[] = ($p->activo) ? ' ' : date('d-m-Y', strtotime($p->update_at));
-				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="modal_edit_attribute('."'".$p->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="delete_attribute_profile('."'".$p->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit('."'".$p->id."'".', 1 )" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="modal_destroy('."'".$p->id."'".', 1 )" ><i class="fa fa-trash-o"></i></button>';
 				$data[] = $row;
 			} // end foreach
 		} else {
@@ -252,13 +254,87 @@ class Perfiles extends CI_Controller {
 				$row[] = $p->nombre_perfil;
 				$row[] = date('d-m-Y', strtotime($p->fecha_inicio_vigencia));
 				$row[] = ($p->activo) ? ' ' : date('d-m-Y', strtotime($p->update_at));
-				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="modal_edit_attribute('."'".$p->id."'".')" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="delete_attribute_profile('."'".$p->id."'".')" ><i class="fa fa-trash-o"></i></button>';
+				$row[] = '<button class="btn u-btn-primary g-mr-10 g-mb-15" title="Editar" onclick="edit('."'".$p->id."'".', 2 )" ><i class="fa fa-edit"></i></button> <button class="btn u-btn-red g-mr-10 g-mb-15" title="Eliminar" onclick="modal_destroy('."'".$p->id."'".', 2 )" ><i class="fa fa-trash-o"></i></button>';
 				$data[] = $row;
 			} // end foreach
 		} // end else 
 		
 		$output = array("data" => $data);
 		echo json_encode($output);
+	}
+
+	function new_assign_profile()
+	{
+		if ($this->input->post('asign_type') == 1) {
+			// Mi asignacion es a una persona
+			$data = array(
+							'persona_id' => $this->input->post('asign_id'),
+							'perfil_id' => $this->input->post('profile_id'),
+							'fecha_inicio_vigencia' => $this->input->post('fecha_inicio_vigencia'),
+							'create_at' => date('Y-m-d H:i:s'),
+							'update_at' => date('Y-m-d H:i:s'),
+							'user_create_id' => $this->session->userdata('id'),
+							'user_last_update_id' => $this->session->userdata('id'),
+							'activo' => TRUE
+			);
+			if ($this->Perfiles_Personas_model->insert_entry($data)) {
+				echo 'ok';
+			} else {
+				echo 'Error al asignar el perfil';
+			}
+		}
+	}
+
+	function get_assign_profile($id, $type)
+	{
+		// obtenemos una asignacion para cargar los datos en el modal de edit
+		if ($type == 1) {
+			$json = $this->Perfiles_Personas_model->get('id', $id);
+			echo json_encode($json);
+		} else {
+			echo 'error';
+		}
+	}
+
+	function edit_assign_profile($id)
+	{
+		if ($this->input->post('asign_type') == 1) {
+			// Editamos asignacion de personas
+			$data = array(
+							'persona_id' => $this->input->post('asign_id'),
+							'perfil_id' => $this->input->post('profile_id'),
+							'fecha_inicio_vigencia' => $this->input->post('fecha_inicio_vigencia'),
+							'update_at' => date('Y-m-d H:i:s'),
+							'user_last_update_id' => $this->session->userdata('id')
+			);
+			if ($this->Perfiles_Personas_model->update_entry($id,$data)) {
+				echo 'ok';
+			} else {
+				echo 'Error al actualizar la información';
+			}
+		} else {
+			// Editamos asignacion de vehiculos
+			echo 'error';
+		}
+	}
+
+	function destroy_assign_profile($id, $type)
+	{
+		if ($type == 1) {
+			// Asignacion de perfil persona
+			if ($this->Perfiles_Personas_model->destroy($id)) {
+				echo 'ok';
+			} else {
+			echo 'Error al querer eliminar la asignacion';
+			}
+		} else {
+			// Asignacion de perfil vehiculo
+			if ($this->Perfiles_Vehiculos_model->destroy($id)) {
+				echo 'ok';
+			} else {
+			echo 'Error al querer eliminar la asignacion';
+			}
+		} 
 	}
 
 }
