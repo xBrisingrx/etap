@@ -78,7 +78,13 @@
                 </li>
                 <li class="nav-item g-mx-20--lg g-mb-5 g-mb-0--lg">
                   <a href="#!" class="nav-link">Informes
-                
+                  <!-- Submenu informes -->
+                  <ul class="hs-sub-menu list-unstyled g-mt-20--lg g-mt-10--lg--scrolling" id="nav-submenu-1" aria-labelledby="nav-link-1">
+                    <li>
+                      <a href="<?php echo base_url('Informes/Informe_matriz');?>">Informe matriz de personal</a>
+                    </li>
+                  </ul>
+                  <!-- End Submenu informes -->
               </a>
                 </li>
                 <li class="nav-item g-mx-20--lg g-mb-5 g-mb-0--lg">

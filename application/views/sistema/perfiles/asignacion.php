@@ -4,7 +4,7 @@
 
 	<button id="btn_add_profile_assign" class="btn u-btn-primary" type="button" > <i class="fa fa-plus"></i> Add </button>
 		<!-- tabla asignacion de perfiles -->
-		  <div class="table-responsive">
+		  <div class="table-responsive" >
 		    <table id="profile_assign_table" class="table table-hover u-table--v1 mb-0">
 		      <thead>
 		        <tr>
@@ -42,9 +42,15 @@
 				    <label class="mr-sm-3 mb-3 mb-lg-0" for="asign_id">Persona (*)</label>
 				    <select class="custom-select mb-3" id="asign_id" required>
 				      <option value="0" selected disabled> Seleccione  </option>
-				      <?php foreach ($asigno as $a): ?>
-				      	<option value="<?php echo $a->id;?>"><?php echo $a->nombre;?></option>
+				      <?php if ($tipo_perfil == 1): ?>
+				      	<?php foreach ($asigno as $a): ?>
+				      		<option value="<?php echo $a->id;?>"><?php echo $a->apellido." ".$a->nombre;?></option>
+				      	<?php endforeach ?>
+				      <?php else: ?>
+				      	<?php foreach ($asigno as $a): ?>
+				      	<option value="<?php echo $a->id;?>">Interno: <?php echo $a->interno." Dominio: ".$a->dominio ;?></option>
 				      <?php endforeach ?>
+				      <?php endif ?>
 				    </select>
 				  </div>
 				  <!-- End select perfil -->
@@ -199,7 +205,7 @@
 				if (type === 1) {
 					$('#modal_delete_assign #name_assign_delete').html('<strong>Persona: </strong>'+ resp.apellido_persona + ' ' + resp.nombre_persona )
 				} else {
-					// code here
+					$('#modal_delete_assign #name_assign_delete').html('<strong>Interno: </strong>'+ resp.interno + ' <strong>Dominio: </strong>' + resp.dominio )
 				}
 				$('#modal_delete_assign #name_profile_delete').html('<strong>Perfil: </strong>' + resp.nombre_perfil)
 				$('#modal_delete_assign #profile_assign_id').val(resp.id)
@@ -216,7 +222,6 @@
 	{
 		let id = $('#modal_delete_assign #profile_assign_id').val()
 		let type_assign = '<?php echo $tipo_perfil ?>'
-		alert('id: ' + id + 'tipo: ' + type_assign)
 		$.ajax({
 			url: '<?php echo base_url("Perfiles/destroy_assign_profile/");?>' + id + '/' + type_assign,
 			type: 'POST',
@@ -244,8 +249,3 @@
 																										});
 	});
 </script>
-
-
-usuario : 4536372aa@speedy
-
-contraseña: 5780857

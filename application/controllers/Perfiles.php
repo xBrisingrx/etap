@@ -266,7 +266,7 @@ class Perfiles extends CI_Controller {
 	function new_assign_profile()
 	{
 		if ($this->input->post('asign_type') == 1) {
-			// Mi asignacion es a una persona
+			// La asignacion es sobre una persona
 			$data = array(
 							'persona_id' => $this->input->post('asign_id'),
 							'perfil_id' => $this->input->post('profile_id'),
@@ -282,6 +282,23 @@ class Perfiles extends CI_Controller {
 			} else {
 				echo 'Error al asignar el perfil';
 			}
+		} else {
+			// La asignacion es sobre un vehiculo
+			$data = array(
+							'vehiculo_id' => $this->input->post('asign_id'),
+							'perfil_id' => $this->input->post('profile_id'),
+							'fecha_inicio_vigencia' => $this->input->post('fecha_inicio_vigencia'),
+							'create_at' => date('Y-m-d H:i:s'),
+							'update_at' => date('Y-m-d H:i:s'),
+							'user_create_id' => $this->session->userdata('id'),
+							'user_last_update_id' => $this->session->userdata('id'),
+							'activo' => TRUE
+			);
+			if ($this->Perfiles_Vehiculos_model->insert_entry($data)) {
+				echo 'ok';
+			} else {
+				echo 'Error al asignar el perfil';
+			}
 		}
 	}
 
@@ -292,7 +309,8 @@ class Perfiles extends CI_Controller {
 			$json = $this->Perfiles_Personas_model->get('id', $id);
 			echo json_encode($json);
 		} else {
-			echo 'error';
+			$json = $this->Perfiles_Vehiculos_model->get('id', $id);
+			echo json_encode($json);
 		}
 	}
 
@@ -314,7 +332,18 @@ class Perfiles extends CI_Controller {
 			}
 		} else {
 			// Editamos asignacion de vehiculos
-			echo 'error';
+			$data = array(
+							'persona_id' => $this->input->post('asign_id'),
+							'perfil_id' => $this->input->post('profile_id'),
+							'fecha_inicio_vigencia' => $this->input->post('fecha_inicio_vigencia'),
+							'update_at' => date('Y-m-d H:i:s'),
+							'user_last_update_id' => $this->session->userdata('id')
+			);
+			if ($this->Perfiles_Vehiculos_model->update_entry($id,$data)) {
+				echo 'ok';
+			} else {
+				echo 'Error al actualizar la información';
+			}
 		}
 	}
 

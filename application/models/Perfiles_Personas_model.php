@@ -7,7 +7,6 @@ class Perfiles_Personas_model extends CI_Model {
   public function __construct()
   {
     parent::__construct();
-    $this->table = 'perfiles_personas';
   }
 
   public function get($attr = null, $valor = null)
