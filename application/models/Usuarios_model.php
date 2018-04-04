@@ -26,7 +26,7 @@ class Usuarios_model extends CI_Model {
 		if ($this->existe($usuario['nombre_usuario'])) {
 
 			$query = $this->db->get_where('usuarios', array('nombre_usuario' => $usuario));
-
+		  $password_correcto = $pass == $this->encryption->decrypt($query->row()->password);
 			$correcto = $query->num_rows() == 1;
 		}
 		return $correcto;

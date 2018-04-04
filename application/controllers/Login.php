@@ -69,4 +69,11 @@ class Login extends CI_Controller {
 		$this->session->set_userdata('token',$token);
 		return $token;
 	}
+
+	function key()
+	{
+		// Genero una cadena aleatoria para usar como llave de encriptacion
+		$key = bin2hex($this->encryption->create_key(16));
+		echo $key;
+	}
 }
