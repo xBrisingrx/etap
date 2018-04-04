@@ -1,8 +1,8 @@
 <section>
 <div class="container-fluid">
-	<h1> Asignación de pergiles de <?php echo $nombre_tipo_perfil ?> </h1>
+	<h1> Asignación de perfiles de <?php echo $nombre_tipo_perfil ?> </h1>
 
-	<button id="btn_add_profile_assign" class="btn u-btn-primary" type="button" > <i class="fa fa-plus"></i> Add </button>
+	<button id="btn_add_profile_assign" class="btn u-btn-primary" type="button" > <i class="fa fa-plus"></i> Asignar perfil </button>
 		<!-- tabla asignacion de perfiles -->
 		  <div class="table-responsive" >
 		    <table id="profile_assign_table" class="table table-hover u-table--v1 mb-0">
